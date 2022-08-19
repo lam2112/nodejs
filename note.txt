@@ -1,0 +1,4 @@
+sass( node-sass 7.0.1){
+    --them vao package.json de tu dong dich scss -> css, co the tu dong tat ca file trong 1 thu muc
+    "watch": "node-sass --watch src/resources/scss/ --output src/public/css/",
+}
