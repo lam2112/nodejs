@@ -22,7 +22,8 @@ app.set("views", path.join(__dirname, "resources\\views"));
 //cho phep cac trang web tinh
 app.use(express.static(path.join(__dirname, "public")));
 
-//tao cac page moi
+//tao cac page moi + tao tuyen duong truy cap (routing) = URL (sd http GET/POST)
+//req -> yeu cau nguoi dung, res -> server gui ve
 app.get("/", (req, res) => {
     res.render("home");
 });
