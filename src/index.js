@@ -35,7 +35,7 @@ app.engine(
     }),
 );
       app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources\\views'));
+app.set('views', path.join(__dirname, 'resources','views'));
 
 //tao cac page moi + tao tuyen duong truy cap (routing) = URL (sd http GET/POST)
 //req -> yeu cau nguoi dung, res -> server gui ve
@@ -44,5 +44,5 @@ app.set('views', path.join(__dirname, 'resources\\views'));
 route(app);
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`App listening at http://localhost:${port}`);
 });

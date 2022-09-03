@@ -6,7 +6,7 @@
   "scripts": {
     "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 -write './src/**/*.{js,json}'",
     "start": "nodemon --inspect src/index.js",
-    "wattch": "node-sass --wacth src/resources/scss --output src/pblic/css/",
+    "watch": "node-sass --watch src/resources/scss/ --output src/public/css/",
     "prepare": "husky install"
   },
   "repository": {
