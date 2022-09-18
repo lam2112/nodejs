@@ -5,7 +5,7 @@ module.exports = {
         return mongoose.map((mongoose) => mongoose.toObject());
     },
 
-    mogooseObject: function (mongoose) {
+    mogooseToObject: function (mongoose) {
         return mongoose ? mongoose.toObject() : mongoose;
     },
 };

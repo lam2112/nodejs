@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-async function connect (){
+async function connect() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/education');;
-        console.log ("connect succsecfully")
+        await mongoose.connect("mongodb://localhost:27017/education");
+        useCreateIndex: true;
+        console.log("connect succsecfully");
     } catch (error) {
-        console.log ("connect falure")
-        
+        console.log("connect falure");
     }
 }
 
-module.exports = {connect};
+module.exports = { connect };
