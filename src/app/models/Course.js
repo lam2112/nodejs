@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
 //https://www.npmjs.com/package/mongoose-slug-generator
 const slug = require("mongoose-slug-generator");
-mongoose.plugin(slug);
+//https://www.npmjs.com/package/mongoose-delete
+const mongooseDelete = require('mongoose-delete');
+
+const Schema = mongoose.Schema;
 
 const Course = new Schema(
     {
@@ -14,7 +15,11 @@ const Course = new Schema(
         level: { type: String, maxLength: 255 },
         slug: { type: String, slug: "name", unique: true },
     },
-    { timestamps: true }
+    { timestamps: true },
+
 );
+
+mongoose.plugin(slug);
+Course.plugin(mongooseDelete,  {overrideMethods: 'all'} )
 
 module.exports = mongoose.model("Course", Course);
