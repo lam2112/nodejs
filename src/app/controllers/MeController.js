@@ -5,15 +5,30 @@ const { NULL } = require("node-sass");
 class MeController {
     // GET /me/stored/course
     storedCourses(req, res, next) {
-        Course.find({})
-            .then((courses) =>
+
+        Promise.all([Course.find({}), Course.countDocumentsDeleted()])
+            .then(([courses, deletedCount])=>
                 res.render("me/stored-courses", {
+                    deletedCount,
                     courses: mutipleMogooseObject(courses),
                 })
             )
-
             .catch(next);
     }
+    //     Course.countDocumentsDeleted()
+    //         .then((deletedCount) =>{
+    //             console.log(deletedCount)
+    //         })
+
+    //     Course.find({})
+    //         .then((courses) =>
+    //             res.render("me/stored-courses", {
+    //                 courses: mutipleMogooseObject(courses),
+    //             })
+    //         )
+
+    //         .catch(next);
+    // }
 
     // GET /me/trash/course
     trashCourses(req, res, next) {
