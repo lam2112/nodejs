@@ -53,10 +53,10 @@ class CourseController {
     }
 
     // DELETE /course/:id
-    //https://www.npmjs.com/package/mongoose-delete
     destroy(req, res, next) {
-        Course.delete({ _id: req.params.id })
-            .then(() => res.redirect("back"))
+        Course.deleteOne({ _id: req.params.id })
+            .then(() => 
+                res.redirect("back"))
             .catch(next);
     }
 }
