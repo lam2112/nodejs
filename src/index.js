@@ -3,33 +3,36 @@ const path = require("path");
 const morgan = require("morgan");
 const methodOverride = require('method-override')
 const hbs = require("express-handlebars");
+const Handlebars = require('handlebars');
+
+const SortMiddleware = require('./app/middleware/sortMiddleware')
+
+const route = require('./routes');
+const db = require('./config/db');
+
+// Connect to DB
+db.connect();
+
 const app = express();
 const port = 3000;
 
-const route = require("./routes");
-const db = require("./config/db");
+// Use static folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-
-
-//connect DB
-db.connect();
-
-//http loger
-// app.use(morgan("combined"));
-
-//cho phep cac trang web tinh
-app.use(express.static(path.join(__dirname, "public")));
-//sd middleware
 app.use(
     express.urlencoded({
         extended: true,
-    })
+    }),
 );
+
 //sd fetch, axios, ...
 app.use(express.json());
 
 // https://expressjs.com/en/resources/middleware/method-override.html (cho phép PUT, PATH trong form)
 app.use(methodOverride('_method'))
+
+//custom middleware
+app.use(SortMiddleware);
 
 //tempolate engine
 //su dung engine de doi ten duoi file
@@ -37,12 +40,8 @@ app.engine(
     "hbs",
     hbs.engine({
         extname: ".hbs",
-
-        // https://www.npmjs.com/package/express-handlebars (tang index)
-        helpers: {
-            sum: (a, b) => a + b,
-        },
-    })
+        helpers: require('./helpers/handlebars')
+    }),
 );
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources", "views"));

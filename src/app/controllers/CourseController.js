@@ -74,6 +74,20 @@ class CourseController {
                 res.redirect("back"))
             .catch(next);
     }
+
+    // POST /course/hand-form-actions
+    handleFormActions(req, res, next){
+        switch(req.body.action){
+            case ('delete'):
+                Course.delete({ _id: { $in: req.body.courseIds}})
+                    .then(() => res.redirect('back'))
+                    .catch(next);
+                break;
+            default: 
+                res.json({ message: 'Action invalid!'});
+        }
+    }
+
 }
 
 // GET gửi yêu cầu lên server để trả lại dl cho client
