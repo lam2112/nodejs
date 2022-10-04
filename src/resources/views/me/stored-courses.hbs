@@ -23,7 +23,13 @@
     <table class="table mt-4">
         <thead>
             <tr>
-                <th scope="col" colspan="2">#</th>
+                <th scope="col"></th>
+                <th scope="col">
+                    ID
+                    {{{sortable '_id' _sort}}}
+
+                </th>
+
                 <th scope="col">
                     Tên khóa học
                     
@@ -50,7 +56,8 @@
                     </td>
 
                     {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
-                    <th scope="row">{{sum @index 1}}</th>
+
+                    <th scope="row">{{_id}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.level}}</td>
                     <td>{{this.createdAt}}</td>

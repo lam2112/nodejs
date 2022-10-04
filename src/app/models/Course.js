@@ -3,11 +3,14 @@ const mongoose = require("mongoose");
 const slug = require("mongoose-slug-generator");
 //https://www.npmjs.com/package/mongoose-delete
 const mongooseDelete = require("mongoose-delete");
+// https://github.com/ramiel/mongoose-sequence (counte _id (1...))
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const Schema = mongoose.Schema;
 
 const CourseSchema = new Schema(
     {
+        _id: {type: Number},
         name: { type: String, maxLength: 255, require: true },
         description: { type: String, maxLength: 600 },
         image: { type: String, maxLength: 255 },
@@ -15,7 +18,10 @@ const CourseSchema = new Schema(
         level: { type: String, maxLength: 255 },
         slug: { type: String, slug: "name", unique: true },
     },
-    { timestamps: true }
+    { 
+        _id: false,
+        timestamps: true
+    }
 );
 
 //custom query helper
@@ -29,6 +35,7 @@ CourseSchema.query.sortable  = function(req ){
     return this;
 }
 
+CourseSchema.plugin(AutoIncrement);
 mongoose.plugin(slug);
 CourseSchema.plugin(mongooseDelete, {
     deletedAt: true,
