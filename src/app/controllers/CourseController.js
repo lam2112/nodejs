@@ -44,6 +44,7 @@ class CourseController {
             .catch(next);
     }
 
+
     // PUT /course/:id
     // https://mongoosejs.com/docs/models.html#updating
     update(req, res, next) {

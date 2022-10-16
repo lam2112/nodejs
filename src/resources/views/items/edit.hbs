@@ -1,0 +1,42 @@
+<div class="mt-4">
+    <h3>Sửa sản phẩm</h3>
+
+    <form class="mt-4" method="POST" action="/items/{{item._id}}/update?_method=PUT">
+
+        <div class="form-group">
+            <label for="name">Nhập tên sản phẩm</label>
+            <input type="text" class="form-control" value="{{item.name}}" id="name" name="name"/>
+            
+        </div>
+
+        <div class="form-group">
+            <label for="classify">Phân loại</label>
+            <input type="text" class="form-control" value="{{item.classify}}" id="classify" name="classify"/>
+
+        </div>
+
+        <div class="form-group">
+            <label for="image">Hình ảnh minh họa</label>
+            <input type="text" class="form-control" value="{{item.image}}" id="image" name="image"/>
+
+        </div>
+
+        <div class="form-group">
+            <label for="description">Mô tả</label>
+            <input type="text" class="form-control" value="{{item.description}}" id="description" name="description"/>
+        </div>
+
+        <div class="form-group">
+            <label for="cost">Giá tiền</label>
+            <input type="number" class="form-control" value="{{item.cost}}" id="cost" name="cost"/>
+        </div>
+
+        <div class="form-group">
+            <label for="from">Nơi sản xuất</label>
+            <input type="text" class="form-control" value="{{item.from}}" id="from" name="from"/>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Lưu lại</button>
+    </form>
+</div>

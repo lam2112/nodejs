@@ -1,0 +1,175 @@
+<form  class="mt-4" method="POST" name="container-form" action="/items/handle-form-actions">
+    <h3>Tất cả sản phẩm</h3>
+    {{!-- <a href="/me/trash/items">Thùng rác ({{deletedCount}})</a> --}}
+
+    <div class="mt-4 d-flex align-items-center">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkbox-all"/>
+            <label class="form-check-label" for="checkbox-all">
+                Chọn tất cả
+            </label>
+        </div>
+
+        <select
+            class="form-control form-control-sm checkbox-select-all-options" name="action" required="required">
+            <option value="">-- Hành động --</option>
+            <option value="delete">Xóa</option>
+
+        </select>
+
+        <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">Thực hiện</button>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <td></td>
+
+                <th scope="col">
+                    Tên sản phẩm
+                    {{!-- https://handlebarsjs.com/guide/#html-escaping (raw) --}}
+                    {{{sortable 'name' _sort}}}
+                </th>
+
+                <th scope="col">
+                    Loại sản phẩm
+                    {{{sortable 'classiffy' _sort}}}
+                </th>
+
+                <th scope="col">
+                    Hình ảnh
+                </th>
+                
+                <th scope="col">
+                    mô tả
+                </th>
+
+                <th scope="col">
+                    Giá tiền
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each item}}
+                <tr>
+                    {{!-- <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="itemIds[]" value="{{this._id}}" />         
+                        </div>
+                    </td> --}}
+                    <td>
+                        <div class="form-check">
+                            <input type="checkbox" name="" id="">
+                        </div>
+                    </td>
+
+                    {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
+                    <td>{{this.name}}</td>
+                    <td>{{this.classify}}</td>
+                    <td>{{this.image}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.cost}}</td>
+
+                    <td>
+                        <a href="/items/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+                        {{! https://getbootstrap.com/docs/4.0/components/modal/ }}
+                        <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-item-modal">Xóa</a>
+                    </td>
+                </tr>
+            {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Hiện không có sản phẩm nào
+                        <a href="/items/create">Thêm sản phẩm</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
+
+{{! Confirm delete items }}
+<div id="delete-item-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa sản phẩm?</h5>
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc muốn xóa sản phẩm này ?</p>
+            </div>
+            <div class="modal-footer">
+                <button
+                    id="btn-delete-item"
+                    type="button"
+                    class="btn btn-danger"
+                >Xóa bỏ</button>
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                >Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name="delete-item-form" method="POST"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var item; 
+        var deleteForm = document.forms['delete-item-form']; 
+        {{!-- var containerForm = document.forms['container-form']; --}}
+        var containerForm = $('form[name="container-form"]');
+        var btnDeleteItem = document.getElementById('btn-delete-item'); // When dialog confirm show
+        var checkboxAll = $('#checkbox-all');
+        var itemItemCheckbox = $('input[name="coursitemIds[]"]');
+        var checkAllSubmitBtn = $('.check-all-submit-btn');
+
+        $('#delete-item-modal').on('show.bs.modal', function (event) { 
+            var button = $(event.relatedTarget); itemId = button.data('id');
+        }); 
+        
+        // Whendelete item btn clicked 
+        btnDeleteItem.onclick = function () {
+            deleteForm.action = '/items/' + itemId + '?_method=DELETE';
+            deleteForm.submit(); 
+        } 
+        
+        checkboxAll.change(function () {
+            var isCheckedAll = $(this).prop('checked');
+            itemItemCheckbox.prop('checked', isCheckedAll);
+            rederCheckAllSubmitBtn();
+        });
+
+        //item item checkbox change
+        itemItemCheckbox.change(function() {
+            var isCheckedAll = itemItemCheckbox.length ===  $('input[name="itemIds[]"]:checked').length;
+            checkboxAll.prop('checked', isCheckedAll);
+            rederCheckAllSubmitBtn();
+        });
+
+        //re-render submit check all btn
+        function rederCheckAllSubmitBtn(){
+            var CheckedCount = $('input[name="itemIds[]"]:checked').length;
+            if(CheckedCount > 0){
+                checkAllSubmitBtn.attr('disabled', false);
+            }
+            else{
+                checkAllSubmitBtn.attr('disabled', true);
+            }
+        }
+
+
+    });
+
+</script>
