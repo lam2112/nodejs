@@ -1,13 +1,10 @@
 const Item = require("../models/Items");
-const Course = require("../models/Course");
-
-const moment = require('moment');
-
+const Items = require("../models/Items");
 const {
     mogooseToObject,
     mutipleMogooseObject,
 } = require("../../util/mongoose");
-const Items = require("../models/Items");
+
 class ItemController {
     
     show(req, res, next) {
@@ -24,6 +21,19 @@ class ItemController {
             .then((item) => {
                 res.render("items/show", {
                     item: mutipleMogooseObject(item)
+                });
+            })
+            .catch((err) => {
+                next = next(err);
+            });
+    }
+
+    showFE(req, res, next) {
+        let itemQuery = Item.find({});
+        itemQuery
+            .then((items) => {
+                res.render("items/showFE", {
+                    items: mutipleMogooseObject(items)
                 });
             })
             .catch((err) => {
@@ -78,6 +88,16 @@ class ItemController {
             .catch(next);
     }
 
+    trash(req, res, next) {
+        Item.findDeleted({})
+            .then((items) =>
+                res.render("items/trashs", {
+                    items: mutipleMogooseObject(items),
+                })
+            )
+            .catch(next);
+    }
+
     // DELETE /course/:id/force
     forceDestroy(req, res, next) {
         Item.deleteOne({ _id: req.params.id })
@@ -94,18 +114,18 @@ class ItemController {
             .catch(next);
     }
 
-    // POST /course/hand-form-actions
-    handleFormActions(req, res, next){
-        switch(req.body.action){
-            case ('delete'):
-                Course.delete({ _id: { $in: req.body.itemIds}})
-                    .then(() => res.redirect('back'))
-                    .catch(next);
-                break;
-            default: 
-                res.json({ message: 'Action invalid!'});
-        }
-    }
+    // // POST /course/hand-form-actions
+    // handleFormActions(req, res, next){
+    //     switch(req.body.action){
+    //         case ('delete'):
+    //             Course.delete({ _id: { $in: req.body.itemIds}})
+    //                 .then(() => res.redirect('back'))
+    //                 .catch(next);
+    //             break;
+    //         default: 
+    //             res.json({ message: 'Action invalid!'});
+    //     }
+    // }
 }
 
 module.exports = new ItemController();

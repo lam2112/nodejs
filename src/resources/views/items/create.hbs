@@ -13,18 +13,19 @@
         </div>
 
         <div class="form-group">
+            <label for="amount">Số lượng</label>
+            <input type="number" class="form-control" id="amount" name="amount" />
+        </div>
+
+        <div class="form-group">
             <label for="image">Hình ảnh minh họa</label>
-            <input type="text" class="form-control" id="image" name="image" />
+            <textarea name="image" id="image" cols="30" rows="10"></textarea>
         </div>
 
         <div class="form-group">
             <label for="description">Mô tả</label>
-            <input type="text" class="form-control" id="description" name="description"/>
-        </div>
+            <textarea name="description" id="description" cols="30" rows="10"></textarea>
 
-        <div class="form-group">
-            <label for="cost">Giá tiền</label>
-            <input type="number" class="form-control" id="cost" name="cost"/>
         </div>
 
         <div class="form-group">
@@ -32,7 +33,11 @@
             <input type="text" class="form-control" id="from" name="from"/>
         </div>
 
-
+        <div class="form-group">
+            <label for="cost">Giá tiền</label>
+            <input type="number" class="form-control" id="cost" name="cost"/>
+        </div>
+        
         <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
     </form>
 </div>

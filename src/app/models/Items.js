@@ -12,10 +12,11 @@ const ItemSchema = new Schema(
     {
         name: { type: String, maxLength: 255, require: true, unique: true },
         classify: { type: String, maxLength: 255 },
+        amount: { type: Number, maxLenght: 20},
         image: {type: String, maxLength: 255},
         description: { type: String, maxLength: 600 },
+        from: {type: String, maxLengt: 255},
         cost: { type: Number },
-        from:  {type: String, maxLengt: 255},
         slug: { type: String, slug: "name", unique: true },
     },
     { 
@@ -24,9 +25,9 @@ const ItemSchema = new Schema(
 );
 
 mongoose.plugin(slug);
-// ItemSchema.plugin(mongooseDelete, {
-//     deletedAt: true,
-//     overrideMethods: "all",
-// });
+ItemSchema.plugin(mongooseDelete, {
+    deletedAt: true,
+    overrideMethods: "all",
+});
 
 module.exports = mongoose.model("Item", ItemSchema);

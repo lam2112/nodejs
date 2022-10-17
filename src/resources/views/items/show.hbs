@@ -1,6 +1,8 @@
 <form  class="mt-4" method="POST" name="container-form" action="/items/handle-form-actions">
     <h3>Tất cả sản phẩm</h3>
-    {{!-- <a href="/me/trash/items">Thùng rác ({{deletedCount}})</a> --}}
+    <a href="/items/trashs">Thùng rác</a>
+    {{!-- ({{deletedCount}}) --}}
+
 
     <div class="mt-4 d-flex align-items-center">
         <div class="form-check">
@@ -126,7 +128,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var item; 
+        var itemId; 
         var deleteForm = document.forms['delete-item-form']; 
         {{!-- var containerForm = document.forms['container-form']; --}}
         var containerForm = $('form[name="container-form"]');
@@ -141,11 +143,14 @@
         
         // Whendelete item btn clicked 
         btnDeleteItem.onclick = function () {
-            deleteForm.action = '/items/' + itemId + '?_method=DELETE';
+            deleteForm.action = '/items/' + itemId + '/delete?_method=DELETE';
             deleteForm.submit(); 
         } 
+
+
+
         
-        checkboxAll.change(function () {
+        {{!-- checkboxAll.change(function () {
             var isCheckedAll = $(this).prop('checked');
             itemItemCheckbox.prop('checked', isCheckedAll);
             rederCheckAllSubmitBtn();
@@ -167,7 +172,7 @@
             else{
                 checkAllSubmitBtn.attr('disabled', true);
             }
-        }
+        } --}}
 
 
     });

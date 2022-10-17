@@ -1,8 +1,31 @@
 <div class="mt-4">
-    <div class="row">
-        <div>
-            <h2>{{item.name}}</h2>
-            <h2>{{item.classify}}</h2>
+    <div>
+        <div class="row">
+            <img class="col-6" src="{{item.image}}" alt="{{item.name}}">
+            <div class="col-6">
+                <div>
+                    <h1 class="mb-4">{{item.name}}</h1>
+                    <p>Giá tiền: {{item.cost}}/kg</p>
+                    <p>Chỉ còn lại: {{item.amount}} kg</p>
+                </div>
+                <div>
+                    <h3>Phân loại</h3>
+                    <p>{{item.classify}}</p>            
+                </div>
+
+                <div>
+                    <h3>Mô tả</h3>
+                    <p>{{item.description}}</p>
+                </div>
+                <div>
+                    <h3>Nơi sản xuất</h3>
+                    <p>{{item.from}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center m-4">
+            <div class="btn btn-primary">Đặt hàng</div>
         </div>
     </div>
 </div>

@@ -1,0 +1,24 @@
+
+<div class="">
+    <div class="row">
+        {{#each items}}
+            <div class="col-sm-6 col-md-4 showFE-card">
+                <div class="card d-flex flex-wrap">
+                    <a href="/items/{{this.slug}}">
+                        <img class="card-img-top showFE-card-img" src="{{this.image}}" alt="{{this.name}}"/>
+                    </a>
+                    <div class="card-body">
+                        <a href="/items/{{this.slug}}">
+                            <h5 class="card-title">{{this.name}}</h5>
+                        </a>
+                        <p class="card-text showFE-card-description">{{this.description}}</p>
+                        <a class="row justify-content-center" href="/items/{{this.slug}}">Xem thêm</a>
+                        <div class="row justify-content-center" >
+                            <a class="btn btn-primary " href="#" >Đặt hàng</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
