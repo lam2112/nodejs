@@ -9,7 +9,14 @@
 
         <div class="form-group">
             <label for="classify">Phân loại</label>
-            <input type="text" class="form-control" id="classify" name="classify" />
+            <div class="input-group">
+                <select class="custom-select" aria-label="Default select example" id="classify" name="classify">
+                    <option selected>Choose...</option>
+                    <option value="Rau">Rau</option>
+                    <option value="Cu">Củ</option>
+                    <option value="Qua">Quả</option>
+                </select>
+            </div>
         </div>
 
         <div class="form-group">
@@ -19,18 +26,19 @@
 
         <div class="form-group">
             <label for="image">Hình ảnh minh họa</label>
-            <textarea name="image" id="image" cols="30" rows="10"></textarea>
+            <textarea class="form-control" aria-label="With textarea" name="image" id="image" cols="40" rows="4"></textarea>
         </div>
 
         <div class="form-group">
             <label for="description">Mô tả</label>
-            <textarea name="description" id="description" cols="30" rows="10"></textarea>
+            <textarea class="form-control" aria-label="With textarea" name="description" id="description" cols="30" rows="10"></textarea>
 
         </div>
 
         <div class="form-group">
             <label for="from">Nơi sản xuất</label>
-            <input type="text" class="form-control" id="from" name="from"/>
+            <textarea class="form-control" aria-label="With textarea" name="from" id="from" cols="30" rows="4"></textarea>
+
         </div>
 
         <div class="form-group">
