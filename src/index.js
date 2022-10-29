@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const methodOverride = require('method-override')
 const hbs = require("express-handlebars");
 const Handlebars = require('handlebars');
+const cookiePaser = require("cookie-parser")
 
 const SortMiddleware = require('./app/middleware/sortMiddleware')
 
@@ -33,6 +34,7 @@ app.use(methodOverride('_method'))
 
 //custom middleware
 app.use(SortMiddleware);
+app.use(cookiePaser())
 
 //tempolate engine
 //su dung engine de doi ten duoi file
