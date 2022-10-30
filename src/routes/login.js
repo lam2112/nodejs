@@ -37,6 +37,60 @@ router.post("/" , (req, res, next)=>{
     })
 })  
 
+var checkLogin = (req, res, next)=>{
+    try {
+        var token = req.cookies.token
+        var iduser = jwt.verify(token, 'mk')
+        Account.findOne({
+            _id: iduser
+        })
+        .then(data=>{
+            if(data){
+                req.data = data
+                next()
+            }
+            else{
+                res.json("Khong du quyen")
+            }
+        })
+        .catch(err=>{})
+
+    } catch (error) {
+        res.status(500).json("Token khong hop le")
+    }
+    
+}
+
+var checkStudent = (req, res, next) => {
+    var role = req.data.role
+    if(role >= 1){
+        next()
+    }
+    else{
+        res.json('Khong du quyen')
+    }
+}
+
+var checkTeacher = (req, res, next) => {
+    var role = req.data.role
+    if(role >= 10){
+        next()
+    }
+    else{
+        res.json('Khong du quyen')
+    }
+}
+
+var checkManager = (req, res, next) => {
+    var role = req.data.role
+    if(role >= 100){
+        next()
+    }
+    else{
+        res.json('Khong du quyen')
+    }
+}
+
 router.get("/private", (req, res, next)=>{
     try{
         var token = req.cookies.token
@@ -50,6 +104,18 @@ router.get("/private", (req, res, next)=>{
     }
 }, (req, res, next)=>{
     res.json("wellcom")
+})
+
+router.get("/task", checkLogin , checkStudent, (req, res, next)=>{
+    res.json("ALL stack")
+})
+
+router.get("/student", checkLogin , checkTeacher, (req, res, next)=>{
+    res.json("ALL student")
+})
+
+router.get("/teacher", checkLogin , checkManager, (req, res, next)=>{
+    res.json("All teacher")
 })
 
 module.exports = router;
