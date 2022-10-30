@@ -8,6 +8,7 @@ const cookiePaser = require("cookie-parser")
 
 const SortMiddleware = require('./app/middleware/sortMiddleware')
 
+
 const route = require('./routes');
 const db = require('./config/db');
 
@@ -34,7 +35,7 @@ app.use(methodOverride('_method'))
 
 //custom middleware
 app.use(SortMiddleware);
-app.use(cookiePaser())
+app.use(cookiePaser());
 
 //tempolate engine
 //su dung engine de doi ten duoi file

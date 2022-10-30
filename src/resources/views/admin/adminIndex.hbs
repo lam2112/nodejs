@@ -1,44 +1,15 @@
 <div class="mt-4">
     <div class="row">
 
-        {{#each Item}}
-
-            <div class="col-sm-6 col-md-4">
-                <div class="card card-course-item">
-                    <div class="card-body">
-                        <h5 class="card-title">{{this.name}}</h5>
-                        <p class="card-text">{{this.description}}</p>
-                        <a href="#" class="btn btn-primary">Buy course</a>
-                    </div>
-                </div>
-            </div>
-
-        {{/each}}
-
-        {{#each courses}}
-
-            <div class="col-sm-6 col-md-4">
-                <div class="card card-course-item">
-
-                    <a href="/courses/{{this.slug}}">
-                        <img
-                            class="card-img-top"
-                            src="{{this.image}}"
-                            alt="{{this.name}}"
-                        />
-                    </a>
-                    <div class="card-body">
-                        <a href="/courses/{{this.slug}}">
-                            <h5 class="card-title">{{this.name}}</h5>
-                        </a>
-
-                        <p class="card-text">{{this.description}}</p>
-                        <a href="#" class="btn btn-primary">Buy course</a>
-                    </div>
-                </div>
-            </div>
-
-        {{/each}}
+       <div class="col-3">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="/items/create">Thêm sản phẩm</a></li>
+                <li class="list-group-item"><a href="/items/show">Hiển thị sản phẩm</a></li>
+                <li class="list-group-item"><a href="/admin/show/users">Hiển thị danh sách người dùng</a></li>
+                <li class="list-group-item"><a href="">Thống kê</a></li>
+            </ul>
+       </div>
+       <div class="col-9"></div>
 
     </div>
 </div>

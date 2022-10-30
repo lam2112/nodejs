@@ -1,27 +1,29 @@
-const Course = require("../models/Course");
-// const Item = require("../models/Items");
-// const User = require("../models/Users");
-
+const Account = require("../models/Accounts");
 
 const { mutipleMogooseObject } = require("../../util/mongoose");
-
 const { NULL, render } = require("node-sass");
 
 class AdminController {   
     adminIndex(req, res, next) {
-        [Item, Course].find({})
-            .then(function(items, courses) {
-                res.render("admin/adminIndex", {
-                    items: mutipleMogooseObject(items),
-                    courses: mutipleMogooseObject(courses),
-                });
-            })
-            .catch((error) => next(error));
-
+        try {
+            res.render("admin/adminIndex")
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     showUser(req, res, next){
-        User.find({})
+        let AccountQuery = Account.find({});
+
+        if (req.query.hasOwnProperty('_sort')){
+            const isValidtype = ['asc', 'desc'].includes(req.query.type)
+            AccountQuery = AccountQuery.sort({
+                [req.query.column]: isValidtype ? req.query.type : 'default',
+            })
+        }
+
+        AccountQuery
             .then((users) =>
                 res.render("admin/show-users", {
                     users: mutipleMogooseObject(users),

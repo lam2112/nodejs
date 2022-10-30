@@ -25,23 +25,20 @@
             <tr>
                 <th scope="col"></th>
                 <th scope="col">
-                    ID
-                    {{{sortable '_id' _sort}}}
-
-                </th>
-
-                <th scope="col">
-                    Tên khóa học
-                    
-                    {{!-- https://handlebarsjs.com/guide/#html-escaping (raw) --}}
+                    Tên đăng nhập
                     {{{sortable 'name' _sort}}}
                 </th>
                 <th scope="col">
-                    ten
+                    Họ và tên
+                    {{{sortable 'name' _sort}}}
                 </th>
-                <th scope="col" colspan="2">
-                    mk         
+                <th scope="col">
+                    Tuổi
                 </th>
+                <th scope="col">
+                    Quyền
+                </th>
+               
             </tr>
         </thead>
         <tbody>
@@ -54,11 +51,10 @@
                     </td>
 
                     {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
-
-                    <th scope="row">{{_id}}</th>
+                    <td>{{this.username}}</td>
                     <td>{{this.name}}</td>
-                    <td>{{this.user_name}}</td>
-                    <td>{{this.password}}</td>
+                    <td>{{this.age}}</td>
+                    <td>{{this.role}}</td>
                     <td>
                         <a
                             href="/courses/{{this._id}}/edit"
@@ -167,7 +163,7 @@
                 checkAllSubmitBtn.attr('disabled', true);
             }
         }
-
+        
 
     });
 
