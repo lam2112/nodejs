@@ -33,6 +33,7 @@
                             <a class="dropdown-item" href="/cart/takeCart">Nhận đơn hàng</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="/login/logout">Đăng xuất</a>
+
                         </div>
                     </li>
                 </ul>
@@ -41,18 +42,34 @@
     </nav>
 </header>
 
-<div class="mt-4 container">
-    <div class="row">
+<div class="container">
+    <form  class="mt-4" method="POST" name="container-form" action="/items/handle-form-actions">
+        <h3>Thống kê sản phẩm</h3>
 
-       <div class="col-3">
-            <ul class="list-group">
-                <li class="list-group-item"><a href="/items/create">Thêm sản phẩm</a></li>
-                <li class="list-group-item"><a href="/items/show">Hiển thị sản phẩm</a></li>
-                <li class="list-group-item"><a href="/admin/show/users">Hiển thị danh sách người dùng</a></li>
-                <li class="list-group-item"><a href="">Thống kê</a></li>
-            </ul>
-       </div>
-       <div class="col-9"></div>
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>Số đơn hàng đã đặt</th>
+                    <th>Tổng sô tiền đã nhận</th>
+                    <th>Số đơn hàng đang vận chuyển</th>
+                    <th>Tổng sô đơn hàng đang chờ duyệt</th>
+                    <th>Số sản phẩm đã hết</th>
 
-    </div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                    <td>{{count}}</td>
+                    <td>{{total}}</td>
+                    <td>{{shipping}}</td>
+                    <td>{{waiting}}</td>
+                    <td>{{amount}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </form>
 </div>
+
+

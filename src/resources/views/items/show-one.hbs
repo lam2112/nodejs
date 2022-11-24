@@ -1,4 +1,48 @@
-<div class="mt-4">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Rau tươi</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                            <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/items/create">Thêm sản phẩm</a>
+                            <a class="dropdown-item" href="/items/show">Hiển thị sản phẩm</a>
+                            <a class="dropdown-item" href="/admin/show/users">Hiển thị người dùng</a>
+                            <a class="dropdown-item" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                            <a class="dropdown-item" href="/cart/transportCart">Xác nhận đơn hàng</a>
+                            <a class="dropdown-item" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                            <a class="dropdown-item" href="/cart/takeCart">Nhận đơn hàng</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/login/logout">Đăng xuất</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="mt-4 container" >
     <div>
         <div class="row">
             <img class="col-6" src="{{item.image}}" alt="{{item.name}}">
@@ -24,8 +68,46 @@
             </div>
         </div>
 
-        <div class="row justify-content-center m-4">
-            <div class="btn btn-primary">Đặt hàng</div>
+        <div class="mt-4">
+            <form action="/items/addCart/{{item._id}}" method="POST" onsubmit="return myFunction()">
+                <div class="row justify-content-center">
+                    <input type="text" name="name" id="name" value="" hidden>
+                    <input type="number" name="cost" id="cost" value="{{item.cost}}" hidden>
+                    <input type="text" name="nameitem" id="nameitem" value="{{item.name}}" hidden>
+                    <input type="number" class="col-2 mr-4" id="amount" name="amount" placeholder="Nhập số lượng">
+                    <p id="err"></p>
+                    <button class="btn btn-primary" data-amount="{{item.amount}}">Đặt hàng</button>
+                    <p id="demo"></p>
+                </div>
+            </form>
         </div>
-    </div>
+    </div>                  
 </div>
+
+<script>
+    document.getElementById("name").value = window.localStorage.getItem("name");
+</script>
+
+<script>
+function myFunction() {
+    let err = document.getElementById("err")
+    let x = document.getElementById("amount");
+        const iAmount = x.dataset.amount
+    let text;
+    if (iAmount - x > 0) {
+        alert("Đặt hàng thành công")
+        return true
+    } else if(iAmount === 0) {
+        alert("Số lượng phải lớn hơn 0");
+        return false
+    }else{
+        alert("Sản phẩm không còn đủ số lượng");
+        return false
+    }
+
+}
+</script>
+
+
+
+

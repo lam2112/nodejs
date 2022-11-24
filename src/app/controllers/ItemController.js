@@ -1,14 +1,16 @@
 const Item = require("../models/Items");
-const Items = require("../models/Items");
+const Cart = require("../models/Cart");
+const jwt = require("jsonwebtoken");
+const Account = require("../models/Accounts");
 const {
     mogooseToObject,
     mutipleMogooseObject,
 } = require("../../util/mongoose");
 
 class ItemController {
-    
+
     show(req, res, next) {
-        let itemQuery = Item.find({});
+        const itemQuery = Item.find({});
 
         if (req.query.hasOwnProperty('_sort')){
             const isValidtype = ['asc', 'desc'].includes(req.query.type)
@@ -17,11 +19,28 @@ class ItemController {
             })
         }
 
+        var token = req.cookies.token
+        var iduser = jwt.verify(token, 'mk')
+        Account.findOne({
+            _id: iduser
+        }).then((account)=>{
+            res.locals.account = account
+        })
+        
         itemQuery
-            .then((item) => {
-                res.render("items/show", {
-                    item: mutipleMogooseObject(item)
-                });
+        .then((item) => {
+                var role = res.locals.account.role; 
+                if(role === 1){
+                    res.render("items/show", {
+                        item: mutipleMogooseObject(item)
+                    });
+                }
+                else{
+                    res.render("items/show", {
+                        item: mutipleMogooseObject(item)
+                    });
+                } 
+                
             })
             .catch((err) => {
                 next = next(err);
@@ -112,20 +131,44 @@ class ItemController {
             .then(() => 
                 res.redirect("back"))
             .catch(next);
-    }
+        }
+        
+    addCart(req, res, next) {
 
-    // // POST /course/hand-form-actions
-    // handleFormActions(req, res, next){
-    //     switch(req.body.action){
-    //         case ('delete'):
-    //             Course.delete({ _id: { $in: req.body.itemIds}})
-    //                 .then(() => res.redirect('back'))
-    //                 .catch(next);
-    //             break;
-    //         default: 
-    //             res.json({ message: 'Action invalid!'});
-    //     }
-    // }
+        const cart = new Cart();
+        const token = req.cookies.token
+        const iduser = jwt.verify(token, 'mk');
+        const iditem = req.params.id;
+        const nameitem = req.body.nameitem;
+        const amount = req.body.amount;
+        const cost = req.body.cost;
+        const status = 0;
+
+        Promise.all([
+            Account.findOne({_id: iduser}),
+            Item.findOne({_id: iditem})
+        ])
+        .then(([acc, item]) => {
+            cart.iduser = iduser; 
+            cart.nameuser =  acc.name
+            cart.iditem = iditem;
+            cart.nameitem = nameitem;
+            cart.amount = amount;
+            cart.cost = amount * cost;
+            cart.status = status;
+            cart.address = acc.address
+            cart.phoneNumber = acc.phoneNumber
+
+            item.amount = item.amount - cart.amount
+            item.save()
+            cart.save()
+                .then(() => {res.redirect("/cart/showCart")})
+                .catch(next);
+            
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
 }
 
 module.exports = new ItemController();

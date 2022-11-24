@@ -6,8 +6,10 @@ const loginController = require("../app/controllers/LoginController");
 const checkLogin = require('../app/middleware/checkLoginMiddleware')
 
 // itemController.index
+router.get("/logout", loginController.logout)
+
 router.get("/" , loginController.login)  
 
-router.post("/" , loginController.sendLogin)  
+router.post("/" , loginController.sendLogin) 
 
 module.exports = router;

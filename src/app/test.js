@@ -1,0 +1,1 @@
+window.localStorage.setItem("name", toString("11111"));

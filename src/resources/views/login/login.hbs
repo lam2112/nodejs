@@ -40,7 +40,9 @@
         })
         .then(data => {
             setCookie('token', data.token, 1)
-            window.location.href = "/"
+            localStorage.setItem("name", data.name)
+            console.log(data.token)
+            window.location.href = "/items/show"
         })
         .catch(err => {
             console.log(err)

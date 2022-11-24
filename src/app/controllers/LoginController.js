@@ -26,9 +26,11 @@ class LoginController {
                     _id: data.id,
     
                 }, 'mk')
+
+                var name = data.name;
                 return res.json({
-                    message: "Dang nhap thanh cong",
-                    token: token
+                    token: token,
+                    name: name,
                 })
             }
             else{
@@ -38,6 +40,10 @@ class LoginController {
         .catch(err => {
             res.status(500).json("Loi server")
         })
+    }
+
+    logout(req, res, next) {
+        res.render("login/logout")
     }
 
 }

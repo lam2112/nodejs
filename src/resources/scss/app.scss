@@ -1,5 +1,10 @@
 @import "variables";
 
+.cropped {
+    height: 200px; 
+    overflow: hidden;
+}
+
 .card-course-item {
     margin-top: 16px;
 }
@@ -21,6 +26,3 @@
     height: 260px;
 }
 
-.showFE-card-description{
-    
-}

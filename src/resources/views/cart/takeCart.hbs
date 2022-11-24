@@ -44,70 +44,51 @@
 
 <div class="container">
     <form  class="mt-4" method="POST" name="container-form" action="/items/handle-form-actions">
-        <h3>Tất cả sản phẩm</h3>
-        <a href="/items/trashs">Thùng rác</a>
-        {{!-- ({{deletedCount}}) --}}
+        <h3>Xác nhận đã nhận đơn hàng</h3>
+
         <table class="table mt-4">
             <thead>
                 <tr>
-                    <th ></th>
+                    <th scope="col">
+                        Người đặt
+                    </th>
 
                     <th scope="col">
                         Tên sản phẩm
                         {{!-- https://handlebarsjs.com/guide/#html-escaping (raw) --}}
                         {{{sortable 'name' _sort}}}
                     </th>
-
-                    <th scope="col">
-                        Loại sản phẩm
-                        {{{sortable 'classiffy' _sort}}}
-                    </th>
                     
-
                     <th scope="col">
                         Số lượng
                     </th>
 
                     <th scope="col">
-                        Giá tiền
+                        Tổng giá tiền
                     </th>
+
+                    
                 </tr>
             </thead>
             <tbody>
-                {{#each item}}
-                
+                {{#each carts}}
                     <tr>
-                        {{!-- <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="itemIds[]" value="{{this._id}}" />         
-                            </div>
-                        </td> --}}
-                        <td>
-                            <div class="form-check">
-                                <input type="checkbox" name="" id="">
-                            </div>
-                        </td>
-
                         {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
-                        <td>{{this.name}}</td>
-                        <td>{{this.classify}}</td>
+                        <td id="name-user"></td>
+                        <td>{{this.nameitem}}</td>
                         <td>{{this.amount}} kg</td>
-                        <td>{{this.cost}}/kg</td>
+                        <td>{{this.cost}}</td>
 
                         <td>
-                            <a href="/items/{{this._id}}/edit" class="btn btn-outline-warning m-1">Sửa</a>
-                            {{! https://getbootstrap.com/docs/4.0/components/modal/ }}
-                            <a href="" class="btn btn-outline-danger m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-item-modal">Xóa</a>
-                            <a href="/items/{{this.slug}}" class="btn btn-outline-primary m-1">Chi tiết</a>
-
+                            {{!-- <a href="" class="btn btn-outline-danger m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-item-modal">Hủy đơn hàng</a> --}}
+                            <a href="" class="btn btn-outline-success m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#accept-item-modal">Đã nhận hàng</a>
                         </td>
                     </tr>
                 
                 {{else}}
                     <tr>
                         <td colspan="5" class="text-center">
-                            Hiện không có sản phẩm nào
-                            <a href="/items/create">Thêm sản phẩm</a>
+                            Hiện không có đơn hàng nào
                         </td>
                     </tr>
                 {{/each}}
@@ -120,16 +101,36 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Xóa sản phẩm?</h5>
+                <h5 class="modal-title">Xóa đơn hàng này?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Bạn có chắc muốn xóa sản phẩm này ?</p>
+                <p>Bạn có chắc muốn hủy sản phẩm này ?</p>
             </div>
             <div class="modal-footer">
-                <button id="btn-delete-item" type="button" class="btn btn-danger">Xóa bỏ</button>
+                <button id="btn-delete-item" type="button" class="btn btn-danger">Hủy đơn hàng</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="accept-item-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chấp nhận đơn hàng này?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc muốn chấp nhận đơn hàng này ?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-accept-item" type="button" class="btn btn-success">chấp nhận đơn hàng</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
             </div>
         </div>
@@ -137,17 +138,16 @@
 </div>
 
 <form name="delete-item-form" method="POST"></form>
+<form name="accept-item-form" method="POST"></form>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var itemId; 
         var deleteForm = document.forms['delete-item-form']; 
-        {{!-- var containerForm = document.forms['container-form']; --}}
+        var acceptForm = document.forms['accept-item-form']; 
         var containerForm = $('form[name="container-form"]');
         var btnDeleteItem = document.getElementById('btn-delete-item'); // When dialog confirm show
-        var checkboxAll = $('#checkbox-all');
-        var itemItemCheckbox = $('input[name="coursitemIds[]"]');
-        var checkAllSubmitBtn = $('.check-all-submit-btn');
+        var btnAccetItem = document.getElementById('btn-accept-item');
 
         $('#delete-item-modal').on('show.bs.modal', function (event) { 
             var button = $(event.relatedTarget); itemId = button.data('id');
@@ -155,10 +155,25 @@
         
         // Whendelete item btn clicked 
         btnDeleteItem.onclick = function () {
-            deleteForm.action = '/items/' + itemId + '/delete?_method=DELETE';
+            deleteForm.action = '/cart/' + itemId + '/delete?_method=DELETE';
             deleteForm.submit(); 
+        } 
+
+        $('#accept-item-modal').on('show.bs.modal', function (event) { 
+            var button = $(event.relatedTarget); itemId = button.data('id');
+        }); 
+        
+        btnAccetItem.onclick = function () {
+            acceptForm.action = '/cart/' + itemId + '/takeCart?_method=POST';
+            acceptForm.submit(); 
         } 
 
     });
 
+
+</script>
+
+<script>
+    nameUser = window.localStorage.getItem("name")
+    document.getElementById("name-user").innerHTML = nameUser
 </script>

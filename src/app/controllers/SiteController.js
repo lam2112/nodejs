@@ -1,16 +1,23 @@
-const Course = require("../models/Course");
-const { mutipleMogooseObject } = require("../../util/mongoose");
-
+const Item = require("../models/Items");
+const Account = require("../models/Accounts");
+const {
+    mogooseToObject,
+    mutipleMogooseObject,
+} = require("../../util/mongoose");
 class SiteController {
     //GET /
     index(req, res, next) {
-        Course.find({})
-            .then((courses) => {
-                res.render("home", {
-                    courses: mutipleMogooseObject(courses),
-                });
-            })
-            .catch((error) => next(error));
+
+        Item.find({})
+        .then((items) => {
+            res.render("home", {
+                items: mutipleMogooseObject(items)
+            });
+        })
+        .catch((err) => {
+            next = next(err);
+        });
+   
     }
 
     // GET /search

@@ -1,87 +1,133 @@
-<form  class="mt-4" method="POST" name="container-form" action="/courses/handle-form-actions">
-    <h3>Khóa học của tôi</h3>
-    <a href="/admin/trash/courses">Thùng rác ({{deletedCount}})</a>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Rau tươi</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <div class="mt-4 d-flex align-items-center">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="checkbox-all"/>
-            <label class="form-check-label" for="checkbox-all">
-                Chọn tất cả
-            </label>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                            <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/items/create">Thêm sản phẩm</a>
+                            <a class="dropdown-item" href="/items/show">Hiển thị sản phẩm</a>
+                            <a class="dropdown-item" href="/admin/show/users">Hiển thị người dùng</a>
+                            <a class="dropdown-item" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                            <a class="dropdown-item" href="/cart/transportCart">Xác nhận đơn hàng</a>
+                            <a class="dropdown-item" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                            <a class="dropdown-item" href="/cart/takeCart">Nhận đơn hàng</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/login/logout">Đăng xuất</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div>
+    <form  class="mt-4" method="POST" name="container-form" action="/courses/handle-form-actions">
+        <h3>Khóa học của tôi</h3>
+        <a href="/admin/trash/courses">Thùng rác ({{deletedCount}})</a>
+
+        <div class="mt-4 d-flex align-items-center">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox-all"/>
+                <label class="form-check-label" for="checkbox-all">
+                    Chọn tất cả
+                </label>
+            </div>
+
+            <select
+                class="form-control form-control-sm checkbox-select-all-options" name="action" required="required">
+                <option value="">-- Hành động --</option>
+                <option value="delete">Xóa</option>
+
+            </select>
+
+            <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">Thực hiện</button>
         </div>
 
-        <select
-            class="form-control form-control-sm checkbox-select-all-options" name="action" required="required">
-            <option value="">-- Hành động --</option>
-            <option value="delete">Xóa</option>
-
-        </select>
-
-        <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">Thực hiện</button>
-    </div>
-
-    <table class="table mt-4">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">
-                    Tên đăng nhập
-                    {{{sortable 'name' _sort}}}
-                </th>
-                <th scope="col">
-                    Họ và tên
-                    {{{sortable 'name' _sort}}}
-                </th>
-                <th scope="col">
-                    Tuổi
-                </th>
-                <th scope="col">
-                    Quyền
-                </th>
-               
-            </tr>
-        </thead>
-        <tbody>
-            {{#each users}}
+        <table class="table mt-4">
+            <thead>
                 <tr>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="courseIds[]" value="{{this._id}}" />         
-                        </div>
-                    </td>
-
-                    {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
-                    <td>{{this.username}}</td>
-                    <td>{{this.name}}</td>
-                    <td>{{this.age}}</td>
-                    <td>{{this.role}}</td>
-                    <td>
-                        <a
-                            href="/courses/{{this._id}}/edit"
-                            class="btn btn-link"
-                        >Sửa</a>
-                        {{! https://getbootstrap.com/docs/4.0/components/modal/ }}
-                        <a
-                            href=""
-                            class="btn btn-link"
-                            data-toggle="modal"
-                            data-id="{{this._id}}"
-                            data-target="#delete-course-modal"
-                        >Xóa</a>
-
-                    </td>
+                    <th scope="col"></th>
+                    <th scope="col">
+                        Tên đăng nhập
+                        {{{sortable 'name' _sort}}}
+                    </th>
+                    <th scope="col">
+                        Họ và tên
+                        {{{sortable 'name' _sort}}}
+                    </th>
+                    <th scope="col">
+                        Tuổi
+                    </th>
+                    <th scope="col">
+                        Quyền
+                    </th>
+                
                 </tr>
-            {{else}}
-                <tr>
-                    <td colspan="5" class="text-center">
-                        chua co user
-                        <a href="/courses/create">Đăng khóa học</a>
-                    </td>
-                </tr>
-            {{/each}}
-        </tbody>
-    </table>
-</form>
+            </thead>
+            <tbody>
+                {{#each users}}
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="courseIds[]" value="{{this._id}}" />         
+                            </div>
+                        </td>
+
+                        {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
+                        <td>{{this.username}}</td>
+                        <td>{{this.name}}</td>
+                        <td>{{this.age}}</td>
+                        <td>{{this.role}}</td>
+                        <td>
+                            <a
+                                href="/courses/{{this._id}}/edit"
+                                class="btn btn-link"
+                            >Sửa</a>
+                            {{! https://getbootstrap.com/docs/4.0/components/modal/ }}
+                            <a
+                                href=""
+                                class="btn btn-link"
+                                data-toggle="modal"
+                                data-id="{{this._id}}"
+                                data-target="#delete-course-modal"
+                            >Xóa</a>
+
+                        </td>
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            chua co user
+                            <a href="/courses/create">Đăng khóa học</a>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </form>
+</div>
 
 {{! Confirm delete courses }}
 <div id="delete-course-modal" class="modal" tabindex="-1">

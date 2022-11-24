@@ -1,9 +1,52 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Rau tươi</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<div class="">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                            <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/items/create">Thêm sản phẩm</a>
+                            <a class="dropdown-item" href="/items/show">Hiển thị sản phẩm</a>
+                            <a class="dropdown-item" href="/admin/show/users">Hiển thị người dùng</a>
+                            <a class="dropdown-item" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                            <a class="dropdown-item" href="/cart/transportCart">Xác nhận đơn hàng</a>
+                            <a class="dropdown-item" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                            <a class="dropdown-item" href="/cart/takeCart">Nhận đơn hàng</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/login/logout">Đăng xuất</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
     <div class="row">
         {{#each items}}
             <div class="col-sm-6 col-md-4 showFE-card">
-                <div class="card d-flex flex-wrap">
+                <div class="card d-flex flex-wrap mt-4">
                     <a href="/items/{{this.slug}}">
                         <img class="card-img-top showFE-card-img" src="{{this.image}}" alt="{{this.name}}"/>
                     </a>
@@ -14,7 +57,7 @@
                         <p class="card-text showFE-card-description">{{this.description}}</p>
                         <a class="row justify-content-center" href="/items/{{this.slug}}">Xem thêm</a>
                         <div class="row justify-content-center" >
-                            <a class="btn btn-primary " href="#" >Đặt hàng</a>
+                            <a class="btn btn-primary " href="#">Đặt hàng</a>
                         </div>
                     </div>
                 </div>
