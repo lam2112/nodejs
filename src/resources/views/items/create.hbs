@@ -1,97 +1,95 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Rau tươi</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<header id="nav-header" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Rau tươi</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                            <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/items/create">Thêm sản phẩm</a>
-                            <a class="dropdown-item" href="/items/show">Hiển thị sản phẩm</a>
-                            <a class="dropdown-item" href="/admin/show/users">Hiển thị người dùng</a>
-                            <a class="dropdown-item" href="/cart/showCart">Danh sách đơn đặt hàng</a>
-                            <a class="dropdown-item" href="/cart/transportCart">Xác nhận đơn hàng</a>
-                            <a class="dropdown-item" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
-                            <a class="dropdown-item" href="/cart/takeCart">Nhận đơn hàng</a>
-                            <a class="dropdown-item" href="/statistical">Thống kê</a>
-
-
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/login/logout">Đăng xuất</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <img class="mr-3" src="{{acc.avt}}" height="40px" width="40px" alt="">
+                <div class="d-flex align-items-center text-white">{{acc.username}}</div>
+            </ul>
+    </div>
 </header>
 
-<div class="mt-4 container">
-    <h3>Thêm rau, củ</h3>
-    <form method="POST" action="store">
-
-        <div class="form-group">
-            <label for="name">Nhập tên sản phẩm</label>
-            <input type="text" class="form-control" id="name" name="name" title="Bạn chưa nhập tên sản phẩm" required/>
-        </div>
-
-        <div class="form-group">
-            <label for="classify">Phân loại</label>
-            <div class="input-group">
-                <select class="custom-select" aria-label="Default select example" id="classify" name="classify" title="Bạn chưa nhập loại sản phẩm">
-                    <option selected>Choose...</option>
-                    <option value="Rau">Rau</option>
-                    <option value="Cu">Củ</option>
-                    <option value="Qua">Quả</option>
-                </select>
+<div class="d-flex">
+    <div class="slide-bar">
+        <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
+            <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
+                <a class="btn-hover btn text-white current" href="/items/create">Thêm sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/show">Hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/showFE">Giao diện hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/admin/show/users">Hiển thị người dùng</a>
+                <a class="btn-hover btn text-white" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/transportCart">Xác nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/statistical">Thống kê</a>
+                <div class="dropdown-divider"></div>
+                <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
+                <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
+                <a class="btn-hover btn text-white" href="/login/editInfo">Sửa thông tin</a>
+                <a class="btn-hover btn text-white" href="/login/logout">Đăng xuất</a>
             </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label for="amount">Số lượng</label>
-            <input type="number" class="form-control" id="amount" name="amount" title="Bạn chưa nhập số lượng" required/>
+    <div class="d-flex justify-content-center w-100">
+        <div class="mt-4 card w-50 ">
+            <div class="card-body blob">
+                <form method="POST" action="store" id="form-create-item">
+                    <h3 class=" justify-content-center">Thêm rau, củ</h3>
+
+                    <div class="form-group">
+                        <label for="name">Nhập tên sản phẩm</label>
+                        <input type="text" class="form-control" id="name" name="name" oninvalid="this.setCustomValidity('Bạn chưa nhập tên sản phẩm')" oninput="setCustomValidity('')" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="classify">Phân loại</label>
+                        <div class="input-group">
+                            <select class="custom-select" id="classify" name="classify" form="form-create-item">
+                                <option selected>Choose...</option>
+                                <option value="Rau">Rau</option>
+                                <option value="Củ">Củ</option>
+                                <option value="Quả">Quả</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Số lượng</label>
+                        <input type="number" class="form-control" id="amount" name="amount" oninvalid="this.setCustomValidity('bạn chưa nhập số lượng')" oninput="setCustomValidity('')" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cost">Giá tiền</label>
+                        <input type="number" class="form-control" id="cost" name="cost" title="Bạn chưa nhập giá tiền" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Link hình ảnh minh họa</label>
+                        <textarea class="form-control" aria-label="With textarea" name="image" id="image" cols="40" rows="4" oninvalid="this.setCustomValidity('Bạn chưa nhập link hình ảnh')" oninput="setCustomValidity('')" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Mô tả</label>
+                        <textarea class="form-control" aria-label="With textarea" name="description" id="description" cols="30" rows="10" oninvalid="this.setCustomValidity('Bạn chưa nhập mô tả')" oninput="setCustomValidity('')" required></textarea>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="from">Nơi sản xuất</label>
+                        <textarea class="form-control" aria-label="With textarea" name="from" id="from" cols="30" rows="4" oninvalid="this.setCustomValidity('Bạn chưa nhập nơi sản xuất')" oninput="setCustomValidity('')" required></textarea>
+
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="image">Link hình ảnh minh họa</label>
-            <textarea class="form-control" aria-label="With textarea" name="image" id="image" cols="40" rows="4" title="Bạn chưa nhập link hình ảnh minh họa" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="description">Mô tả</label>
-            <textarea class="form-control" aria-label="With textarea" name="description" id="description" cols="30" rows="10" title="Bạn chưa nhập mô tả" required></textarea>
-
-        </div>
-
-        <div class="form-group">
-            <label for="from">Nơi sản xuất</label>
-            <textarea class="form-control" aria-label="With textarea" name="from" id="from" cols="30" rows="4" title="Bạn chưa nhập nơi sản xuất" required></textarea>
-
-        </div>
-
-        <div class="form-group">
-            <label for="cost">Giá tiền</label>
-            <input type="number" class="form-control" id="cost" name="cost" title="Bạn chưa nhập giá tiền" required/>
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
-    </form>
+    </div>
 </div>
+    

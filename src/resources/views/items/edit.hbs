@@ -1,91 +1,94 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Rau tươi</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<header id="nav-header" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Rau tươi</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                            <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="https://imgs.search.brave.com/SuRT8a4MGtEQtrFveoa9YRtPIPzBsQIYniZWi1_MKk4/rs:fit:594:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC53/c29ZRjROQUdsRGVJ/X3VmcXJJOEtnSGFG/NiZwaWQ9QXBp" alt="" class="user-avarta">
-                            Lam
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/items/create">Thêm sản phẩm</a>
-                            <a class="dropdown-item" href="/items/show">Hiển thị sản phẩm</a>
-                            <a class="dropdown-item" href="/admin/show/users">Hiển thị người dùng</a>
-                            <a class="dropdown-item" href="/cart/showCart">Danh sách đơn đặt hàng</a>
-                            <a class="dropdown-item" href="/cart/transportCart">Xác nhận đơn hàng</a>
-                            <a class="dropdown-item" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
-                            <a class="dropdown-item" href="/cart/takeCart">Nhận đơn hàng</a>
-                            <a class="dropdown-item" href="/statistical">Thống kê</a>
-
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/login/logout">Đăng xuất</a>
-
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <img class="mr-3" src="{{acc.avt}}" height="40px" width="40px" alt="">
+                <div class="d-flex align-items-center text-white">{{acc.username}}</div>
+            </ul>
+    </div>
 </header>
 
-<div class="mt-4 container">
-    <h3>Sửa sản phẩm</h3>
 
-    <form class="mt-4" method="POST" action="/items/{{item._id}}/update?_method=PUT">
-
-        <div class="form-group">
-            <label for="name">Nhập tên sản phẩm</label>
-            <input type="text" class="form-control" value="{{item.name}}" id="name" name="name" />
+<div class="d-flex">
+    <div class="slide-bar">
+        <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
+            <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
+                <a class="btn-hover btn text-white" href="/items/create">Thêm sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/show">Hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white current" href="/items/showFE">Giao diện hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/admin/show/users">Hiển thị người dùng</a>
+                <a class="btn-hover btn text-white" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/transportCart">Xác nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/statistical">Thống kê</a>
+                <div class="dropdown-divider"></div>
+                <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
+                <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
+                <a class="btn-hover btn text-white" href="/login/editInfo">Sửa thông tin</a>
+                <a class="btn-hover btn text-white" href="/login/logout">Đăng xuất</a>
+            </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label for="classify">Phân loại</label>
-            <input type="text" class="form-control" value="{{item.classify}}" id="classify" name="classify" />
-        </div>
+    <div class="mt-4 container">
+        <h3>Sửa sản phẩm</h3>
 
-        <div class="form-group">
-            <label for="amount">Số lượng</label>
-            <input type="number" class="form-control" value="{{item.amount}}" id="amount" name="amount" />
-        </div>
+        <form class="mt-4" method="POST" action="/items/{{item._id}}/update?_method=PUT" id="form-edit-item">
 
-        <div class="form-group">
-            <label for="image">Hình ảnh minh họa</label>
-            <input type="text" class="form-control" value="{{item.image}}" id="image" name="image" />
-        </div>
+            <div class="form-group">
+                <label for="name">Nhập tên sản phẩm</label>
+                <input type="text" class="form-control" value="{{item.name}}" id="name" name="name" oninvalid="this.setCustomValidity('Bạn chưa nhập tên sản phẩm')" oninput="setCustomValidity('')" required>
+            </div>
 
-        <div class="form-group">
-            <label for="description">Mô tả</label>
-            <input type="text" class="form-control" value="{{item.description}}" id="description" name="description"/>
-        </div>
+            <div class="form-group">
+                <label for="classify">Phân loại</label>
+                {{!-- <input type="text" class="form-control" value="{{item.classify}}" id="classify" name="classify" /> --}}
+                <div class="input-group">
+                        <select class="custom-select" id="classify" name="classify" form="form-edit-item">
+                                <option selected>{{item.classify}}</option>
+                                <option value="Rau">Rau</option>
+                                <option value="Củ">Củ</option>
+                                <option value="Quả">Quả</option>
+                            </select>
+                    </div>
+            </div>
 
-        <div class="form-group">
-            <label for="from">Nơi sản xuất</label>
-            <input type="text" class="form-control" value="{{item.from}}" id="from" name="from"/>
-        </div>
+            <div class="form-group">
+                <label for="amount">Số lượng</label>
+                <input type="number" class="form-control" value="{{item.amount}}" id="amount" name="amount" oninvalid="this.setCustomValidity('bạn chưa nhập số lượng')" oninput="setCustomValidity('')" required>
+            </div>
 
-        <div class="form-group">
-            <label for="cost">Giá tiền</label>
-            <input type="number" class="form-control" value="{{item.cost}}" id="cost" name="cost"/>
-        </div>
+            <div class="form-group">
+                <label for="image">Hình ảnh minh họa</label>
+                <input type="text" class="form-control" value="{{item.image}}" id="image" name="image" oninvalid="this.setCustomValidity('Bạn chưa nhập link hình ảnh')" oninput="setCustomValidity('')" required>
+                <hr>
+                <img src="{{item.image}}" width="200px" height="200px" alt="Hình minh họa sản phẩm">
+                <hr>
+            </div>
 
+            <div class="form-group">
+                <label for="description">Mô tả</label>
+                <input type="text" class="form-control" value="{{item.description}}" id="description" name="description" oninvalid="this.setCustomValidity('Bạn chưa nhập mô tả')" oninput="setCustomValidity('')" required>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Lưu lại</button>
-    </form>
+            <div class="form-group">
+                <label for="from">Nơi sản xuất</label>
+                <input type="text" class="form-control" value="{{item.from}}" id="from" name="from" oninvalid="this.setCustomValidity('Bạn chưa nhập nơi sản xuất')" oninput="setCustomValidity('')" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cost">Giá tiền</label>
+                <input type="number" class="form-control" value="{{item.cost}}" id="cost" name="cost" oninvalid="this.setCustomValidity('Bạn chưa nhập giá tiền')" oninput="setCustomValidity('')" required>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Lưu lại</button>
+            </div>
+        </form>
+    </div>
 </div>

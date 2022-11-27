@@ -6,7 +6,8 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-                <div class=" text-white">{{acc.username}}</div>
+                <img class="mr-3" src="{{acc.avt}}" height="40px" width="40px" alt="">
+                <div class="d-flex align-items-center text-white">{{acc.username}}</div>
             </ul>
     </div>
 </header>
@@ -14,8 +15,15 @@
     <div class="slide-bar">
         <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
             <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
-                <a class="btn-hover btn text-white" href="/login" >Đăng nhập</a>
-                <a class="btn-hover btn text-white" href="/register" >Đăng ký</a>
+                <a class="btn-hover btn text-white" href="/items/showFE">Giao diện hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
+                <div class="dropdown-divider"></div>
+                <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
+                <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
+                <a class="btn-hover btn text-white" href="/login/editInfo">Sửa thông tin</a>
+                <a class="btn-hover btn text-white" href="/login/logout">Đăng xuất</a>
             </div>
         </div>
     </div>

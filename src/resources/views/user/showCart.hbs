@@ -13,18 +13,14 @@
 </header>
 
 <div class="d-flex">
+
     <div class="slide-bar">
         <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
             <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
-                <a class="btn-hover btn text-white" href="/items/create">Thêm sản phẩm</a>
-                <a class="btn-hover btn text-white" href="/items/show">Hiển thị sản phẩm</a>
                 <a class="btn-hover btn text-white" href="/items/showFE">Giao diện hiển thị sản phẩm</a>
-                <a class="btn-hover btn text-white" href="/admin/show/users">Hiển thị người dùng</a>
-                <a class="btn-hover btn text-white" href="/cart/showCart">Danh sách đơn đặt hàng</a>
-                <a class="btn-hover btn text-white" href="/cart/transportCart">Xác nhận đơn hàng</a>
-                <a class="btn-hover btn text-white current" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                <a class="btn-hover btn text-white  current" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
                 <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
-                <a class="btn-hover btn text-white" href="/statistical">Thống kê</a>
                 <div class="dropdown-divider"></div>
                 <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
                 <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
@@ -33,11 +29,10 @@
             </div>
         </div>
     </div>
-
+    
     <div class="w-100 form-item">
         <form  class="mt-4" method="POST" name="container-form" action="/items/handle-form-actions">
-            <h3>Đơn hàng đang vận chuyển</h3>
-
+            <h3>Tất cả yêu cầu đặt hàng đã gửi</h3>
             <table class="table mt-4">
                 <thead>
                     <tr>
@@ -51,32 +46,31 @@
                         </th>
                         
                         <th scope="col">
-                            Số điện thoại
+                            Số lượng
                         </th>
 
                         <th scope="col">
-                            Địa chỉ
+                            Tổng giá tiền
                         </th>
-
                         <th scope="col">
                             Chức năng
                         </th>
+
                         
                     </tr>
                 </thead>
                 <tbody>
+                    
                     {{#each carts}}
                         <tr>
                             {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
                             <td>{{this.nameuser}}</td>
                             <td>{{this.nameitem}}</td>
-                            <td>0{{this.phoneNumber}}</td>
-                            <td>{{this.address}}</td>
+                            <td>{{this.amount}} kg</td>
+                            <td>{{this.cost}}</td>
 
                             <td>
-                                <a href="" class="btn btn-outline-danger m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-item-modal">Hủy đơn hàng</a>
-                                <a href="/cart/{{this._id}}/showOne" class="btn btn-outline-warning m-1">Chi tiết</a>
-                                <a href="" class="btn btn-outline-success m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#accept-item-modal">Chấp nhận</a>
+                                <a href="" class="btn btn-outline-danger m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-item-modal">Xóa</a>
                             </td>
                         </tr>
                     
@@ -98,36 +92,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Xóa đơn hàng này?</h5>
+                <h5 class="modal-title">Xóa sản phẩm?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Bạn có chắc muốn hủy sản phẩm này ?</p>
+                <p>Bạn có chắc muốn xóa sản phẩm này ?</p>
             </div>
             <div class="modal-footer">
-                <button id="btn-delete-item" type="button" class="btn btn-danger">Hủy đơn hàng</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="accept-item-modal" class="modal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Chấp nhận đơn hàng này?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Bạn có chắc muốn chấp nhận đơn hàng này ?</p>
-            </div>
-            <div class="modal-footer">
-                <button id="btn-accept-item" type="button" class="btn btn-success">chấp nhận đơn hàng</button>
+                <button id="btn-delete-item" type="button" class="btn btn-danger">Xóa bỏ</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
             </div>
         </div>
@@ -135,20 +109,13 @@
 </div>
 
 <form name="delete-item-form" method="POST"></form>
-<form name="accept-item-form" method="POST"></form>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var itemId; 
         var deleteForm = document.forms['delete-item-form']; 
-        var showForm = document.forms['btn-show-user']; 
-        var acceptForm = document.forms['accept-item-form']; 
-
         var containerForm = $('form[name="container-form"]');
-
-        var btnDeleteItem = document.getElementById('btn-delete-item');
-        var btnShowUser = document.getElementById('btn-show-user');
-        var btnAccetItem = document.getElementById('btn-accept-item');
+        var btnDeleteItem = document.getElementById('btn-delete-item'); // When dialog confirm show
 
         $('#delete-item-modal').on('show.bs.modal', function (event) { 
             var button = $(event.relatedTarget); itemId = button.data('id');
@@ -160,16 +127,6 @@
             deleteForm.submit(); 
         } 
 
-        $('#accept-item-modal').on('show.bs.modal', function (event) { 
-            var button = $(event.relatedTarget); itemId = button.data('id');
-        }); 
-        
-        btnAccetItem.onclick = function () {
-            acceptForm.action = '/cart/' + itemId + '/shippingCart?_method=POST';
-            acceptForm.submit(); 
-        } 
-
     });
-
 
 </script>

@@ -1,0 +1,73 @@
+<header id="nav-header" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Rau tươi</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <img class="mr-3" src="{{acc.avt}}" height="40px" width="40px" alt="">
+                <div class="d-flex align-items-center text-white">{{acc.username}}</div>
+            </ul>
+    </div>
+</header>
+
+
+
+<div class="d-flex">
+    <div class="slide-bar">
+        <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
+            <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
+                <a class="btn-hover btn text-white" href="/items/showFE">Giao diện hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
+                <div class="dropdown-divider"></div>
+                <a class="btn-hover btn text-white current" href="/login/checkInfor">Xem thông tin cá nhân</a>
+                <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
+                <a class="btn-hover btn text-white" href="/login/editInfo">Sửa thông tin</a>
+                <a class="btn-hover btn text-white" href="/login/logout">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center w-75">
+        <div class="mt-4 card w-50 ">
+            <div class="card-body blob">
+                <h3 class="card-title d-flex justify-content-center">Xem thông tin</h3>
+                <div>
+                    <div class="form-group">
+                        <label for="name">Họ và tên:</label>
+                        <div class="form-control">{{acc.name}}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Tuổi:</label>
+                        <div class="form-control">{{acc.age}}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="avt">Link ảnh đại diện:</label>
+                        <div class="form-control">{{acc.avt}}</div>
+                        <hr>
+                        <img src="{{acc.avt}}" width="200px" height="200px" alt=""  style="border-radius: 50%;">
+                        <hr>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Địa chỉ:</label>
+                        <div class="form-control">{{acc.address}}</div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phoneNumber">Số điện thoại liên hệ:</label>
+                        <div class="form-control">0{{acc.phoneNumber}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

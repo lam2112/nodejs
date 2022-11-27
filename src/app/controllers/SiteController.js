@@ -1,5 +1,5 @@
-const Item = require("../models/Items");
 const Account = require("../models/Accounts");
+const jwt = require("jsonwebtoken");
 const {
     mogooseToObject,
     mutipleMogooseObject,
@@ -7,22 +7,26 @@ const {
 class SiteController {
     //GET /
     index(req, res, next) {
+        if(req.cookies.token === undefined){
+            res.render("home");
+        }
+        else{
+            const token = req.cookies.token;
+            const iduser = jwt.verify(token, 'mk');
 
-        Item.find({})
-        .then((items) => {
-            res.render("home", {
-                items: mutipleMogooseObject(items)
-            });
-        })
-        .catch((err) => {
-            next = next(err);
-        });
-   
-    }
-
-    // GET /search
-    search(req, res) {
-        res.render("search");
+            Account.findOne({_id: iduser})
+            .then((acc)=>{
+                if(acc.role === 1){
+                    res.render("admin/home", {
+                        acc: mogooseToObject(acc)
+                    });
+                }else{
+                    res.render("user/home", {
+                        acc: mogooseToObject(acc)
+                    })
+                }
+            })
+        }
     }
 }
 

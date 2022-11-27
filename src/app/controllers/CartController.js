@@ -9,31 +9,44 @@ const {
 
 class CartController {
     showCart(req, res, next){
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
         const token = req.cookies.token;
         const iduser = jwt.verify(token, 'mk');
         const onCart = 0;
         
         Promise.all([
-            Cart.find({
-                iduser: iduser,
-                status: onCart,
-            }),
+            Cart.find({status: onCart}),
             Account.findOne({_id: iduser})
         ])
         .then(([carts, acc]) => {
-            res.render("cart/showCart", {
-                carts: mutipleMogooseObject(carts),
-                acc: acc
-            })
-        }).catch((next) => {
-            console.log(next);
+            if(acc.role === 1){
+                res.render("cart/showCart", {
+                    carts: mutipleMogooseObject(carts),
+                    acc: mogooseToObject(acc)
+                });
+            }else{
+                Cart.find({iduser: iduser, status: onCart})
+                .then((carts)=>{
+                    res.render("user/showCart", {
+                        carts: mutipleMogooseObject(carts),
+                        acc: mogooseToObject(acc)
+                    });
+                }) .catch((err)=>{
+                    console.log(err);
+                });
+            }
+
+            
+        }).catch((err) => {
+            console.log(err);
         });
     }
 
     deleteCart(req, res, next){
         Cart.deleteOne({ _id: req.params.id })
             .then(() => {
-                console.log(req.params.id)
                 res.redirect("back")
             })
             .catch((next)=>{
@@ -42,18 +55,24 @@ class CartController {
     }
 
     transportCart(req, res, next){
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
         const token = req.cookies.token;
         const iduser = jwt.verify(token, 'mk');
         const onCart = 0;
 
-        Cart.find({
-            iduser: iduser,
-            status: onCart,
-        })
-        .then((carts) => {
-            res.render("cart/transportCart", {
-                carts: mutipleMogooseObject(carts)
+        Promise.all([
+            Cart.find({
+                status: onCart,
+            }),
+            Account.findOne({_id: iduser})
 
+        ])
+        .then(([carts, acc]) => {
+            res.render("cart/transportCart", {
+                carts: mutipleMogooseObject(carts),
+                acc: mogooseToObject(acc)
             })
         }).catch((next) => {
             console.log(next);
@@ -63,14 +82,6 @@ class CartController {
     transportStatusCart(req, res, next){
         Cart.findOne({ _id: req.params.id})
             .then((cart) => {
-                Item.findOne({_id: cart.iditem})
-                    .then((item) => {
-                        item.amount = item.amount - cart.amount
-                        item.save()
-                    }).catch((err) => {
-                        console.log(err)
-                    });
-
                 cart.status = 1
                 cart.save()
                 res.redirect("back")
@@ -81,19 +92,37 @@ class CartController {
     }
 
     shippingCart(req, res, next){
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
         const token = req.cookies.token;
         const iduser = jwt.verify(token, 'mk');
         const onCart = 1;
 
-        Cart.find({
-            iduser: iduser,
-            status: onCart,
-        })
-        .then((carts) => {
-            res.render("cart/shippingCart", {
-                carts: mutipleMogooseObject(carts)
+        Promise.all([
+            Cart.find({
+                status: onCart,
+            }),
+            Account.findOne({_id: iduser})
 
-            })
+        ])
+        .then(([carts, acc]) => {
+            if(acc.role === 1){
+                res.render("cart/shippingCart", {
+                    carts: mutipleMogooseObject(carts),
+                    acc: mogooseToObject(acc)
+                });
+            }else{
+                Cart.find({iduser: iduser, status: onCart})
+                .then((carts)=>{
+                    res.render("user/shippingCart", {
+                        carts: mutipleMogooseObject(carts),
+                        acc: mogooseToObject(acc)
+                    });
+                }) .catch((err)=>{
+                    console.log(err);
+                });
+            }
         }).catch((next) => {
             console.log(next);
         });
@@ -112,19 +141,35 @@ class CartController {
     }
 
     takeCart(req, res, next){
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+
         const token = req.cookies.token;
         const iduser = jwt.verify(token, 'mk');
         const onCart = 2;
 
-        Cart.find({
-            iduser: iduser,
-            status: onCart,
-        })
-        .then((carts) => {
-            res.render("cart/takeCart", {
-                carts: mutipleMogooseObject(carts)
-
-            })
+        Promise.all([
+            Cart.find({status: onCart}),
+            Account.findOne({_id: iduser})
+        ])
+        .then(([carts, acc]) => {
+            if(acc.role === 1){
+                res.render("cart/takeCart", {
+                    carts: mutipleMogooseObject(carts),
+                    acc: mogooseToObject(acc)
+                });
+            }else{
+                Cart.find({iduser: iduser, status: onCart})
+                .then((carts)=>{
+                    res.render("user/takeCart", {
+                        carts: mutipleMogooseObject(carts),
+                        acc: mogooseToObject(acc)
+                    });
+                }) .catch((err)=>{
+                    console.log(err);
+                });
+            }
         }).catch((next) => {
             console.log(next);
         });
@@ -140,6 +185,27 @@ class CartController {
             .catch((next)=>{
                 console.log(next);
             });
+    }
+
+    showOne(req, res, next){
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+        const token = req.cookies.token;
+        const iduser = jwt.verify(token, 'mk');
+        Promise.all([
+            Cart.findOne({ _id: req.params.id}),
+            Account.findOne({_id: iduser})
+        ])
+        .then(([cart, acc]) => {
+            res.render("cart/showOne", {
+                cart: mogooseToObject(cart),
+                acc: mogooseToObject(acc)
+            })
+        })
+        .catch((next)=>{
+            console.log(next);
+        });
     }
 }
 

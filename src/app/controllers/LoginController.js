@@ -46,6 +46,91 @@ class LoginController {
         res.render("login/logout")
     }
 
+    changePass(req, res, next){
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+
+        var token = req.cookies.token;
+        var iduser = jwt.verify(token, 'mk');
+        Account.findOne({_id: iduser})
+        .then((acc) => {
+            if(acc.role === 1)
+                res.render("login/changePass",{
+                    acc: mogooseToObject(acc)
+                })
+            else
+            res.render("user/changePass",{
+                acc: mogooseToObject(acc)
+            })
+
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+
+    changePassSave(req, res, next) {
+        Account.updateOne({ _id: req.params.id }, req.body)
+            .then(() =>{
+                res.redirect("/items/showFE")
+            })
+            .catch(next); 
+    }
+
+    editInfor(req, res, next){
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+
+        var token = req.cookies.token;
+        var iduser = jwt.verify(token, 'mk');
+        Account.findOne({_id: iduser})
+        .then((acc) => {
+            if(acc.role === 1)
+                res.render("login/editInfor",{
+                    acc: mogooseToObject(acc)
+                })
+            else
+            res.render("user/editInfor",{
+                acc: mogooseToObject(acc)
+            })
+
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+
+    editInfoSave(req, res, next) {
+        Account.updateOne({ _id: req.params.id }, req.body)
+            .then(() =>{
+                res.redirect("/items/showFE")
+            })
+            .catch(next); 
+    }
+
+    checkInfor(req, res, next){
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+
+        var token = req.cookies.token;
+        var iduser = jwt.verify(token, 'mk');
+        Account.findOne({_id: iduser})
+        .then((acc) => {
+            if(acc.role === 1)
+                res.render("login/checkInfor",{
+                    acc: mogooseToObject(acc)
+                })
+            else
+            res.render("user/checkInfor",{
+                acc: mogooseToObject(acc)
+            })
+
+        }).catch((err) => {
+            console.log(err)
+        });
+    }
+
 }
 
 module.exports = new LoginController();

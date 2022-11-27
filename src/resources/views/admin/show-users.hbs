@@ -1,132 +1,97 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Rau tươi</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<header id="nav-header" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Rau tươi</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                            <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/items/create">Thêm sản phẩm</a>
-                            <a class="dropdown-item" href="/items/show">Hiển thị sản phẩm</a>
-                            <a class="dropdown-item" href="/admin/show/users">Hiển thị người dùng</a>
-                            <a class="dropdown-item" href="/cart/showCart">Danh sách đơn đặt hàng</a>
-                            <a class="dropdown-item" href="/cart/transportCart">Xác nhận đơn hàng</a>
-                            <a class="dropdown-item" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
-                            <a class="dropdown-item" href="/cart/takeCart">Nhận đơn hàng</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/login/logout">Đăng xuất</a>
-
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <img class="mr-3" src="{{acc.avt}}" height="40px" width="40px" alt="">
+                <div class="d-flex align-items-center text-white">{{acc.username}}</div>
+            </ul>
+    </div>
 </header>
 
-<div>
-    <form  class="mt-4" method="POST" name="container-form" action="/courses/handle-form-actions">
-        <h3>Khóa học của tôi</h3>
-        <a href="/admin/trash/courses">Thùng rác ({{deletedCount}})</a>
-
-        <div class="mt-4 d-flex align-items-center">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="checkbox-all"/>
-                <label class="form-check-label" for="checkbox-all">
-                    Chọn tất cả
-                </label>
+<div class="d-flex">
+    <div class="slide-bar">
+        <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
+            <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
+                <a class="btn-hover btn text-white" href="/items/create">Thêm sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/show">Hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/showFE">Giao diện hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white current" href="/admin/show/users">Hiển thị người dùng</a>
+                <a class="btn-hover btn text-white" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/transportCart">Xác nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/statistical">Thống kê</a>
+                <div class="dropdown-divider"></div>
+                <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
+                <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
+                <a class="btn-hover btn text-white" href="/login/editInfo">Sửa thông tin</a>
+                <a class="btn-hover btn text-white" href="/login/logout">Đăng xuất</a>
             </div>
-
-            <select
-                class="form-control form-control-sm checkbox-select-all-options" name="action" required="required">
-                <option value="">-- Hành động --</option>
-                <option value="delete">Xóa</option>
-
-            </select>
-
-            <button class="btn btn-primary btn-sm check-all-submit-btn" disabled="disabled">Thực hiện</button>
         </div>
+    </div>
 
-        <table class="table mt-4">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">
-                        Tên đăng nhập
-                        {{{sortable 'name' _sort}}}
-                    </th>
-                    <th scope="col">
-                        Họ và tên
-                        {{{sortable 'name' _sort}}}
-                    </th>
-                    <th scope="col">
-                        Tuổi
-                    </th>
-                    <th scope="col">
-                        Quyền
-                    </th>
-                
-                </tr>
-            </thead>
-            <tbody>
-                {{#each users}}
+    <div class="w-100 form-item">
+        <form  class="mt-4" method="POST" name="container-form" action="/courses/handle-form-actions">
+            <h3>Danh sách tất cả người dùng</h3>
+
+            <table class="table mt-4">
+                <thead>
                     <tr>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="courseIds[]" value="{{this._id}}" />         
-                            </div>
-                        </td>
-
-                        {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
-                        <td>{{this.username}}</td>
-                        <td>{{this.name}}</td>
-                        <td>{{this.age}}</td>
-                        <td>{{this.role}}</td>
-                        <td>
-                            <a
-                                href="/courses/{{this._id}}/edit"
-                                class="btn btn-link"
-                            >Sửa</a>
-                            {{! https://getbootstrap.com/docs/4.0/components/modal/ }}
-                            <a
-                                href=""
-                                class="btn btn-link"
-                                data-toggle="modal"
-                                data-id="{{this._id}}"
-                                data-target="#delete-course-modal"
-                            >Xóa</a>
-
-                        </td>
+                        <th scope="col">
+                            Tên đăng nhập
+                        </th>
+                        <th scope="col">
+                            Họ và tên
+                        </th>
+                        <th scope="col">
+                            Tuổi
+                        </th>
+                        <th scope="col">
+                            Quyền
+                        </th>
+                        <th scope="col">
+                            Chức năng
+                        </th>
                     </tr>
-                {{else}}
-                    <tr>
-                        <td colspan="5" class="text-center">
-                            chua co user
-                            <a href="/courses/create">Đăng khóa học</a>
-                        </td>
-                    </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </form>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                        <tr>
+                            <td>{{this.username}}</td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.age}}</td>
+                            <td>{{this.role}}</td>
+                            <td>
+                                <a
+                                    href="/admin/{{this._id}}/edit"
+                                    class="btn btn-outline-warning"
+                                >Sửa</a>
+                                <a
+                                    href=""
+                                    class="btn btn-outline-danger"
+                                    data-toggle="modal"
+                                    data-id="{{this._id}}"
+                                    data-target="#delete-course-modal"
+                                >Xóa</a>
+
+                            </td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                chưa có người dùng nào
+                                <a href="/courses/create">Đăng khóa học</a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </form>
+    </div>
 </div>
 
 {{! Confirm delete courses }}
@@ -134,7 +99,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Xóa khóa học?</h5>
+                <h5 class="modal-title">Xóa người này?</h5>
                 <button
                     type="button"
                     class="close"
@@ -145,7 +110,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Bạn có chắc muốn xóa khóa học này ?</p>
+                <p>Bạn có chắc muốn xóa người này ?</p>
             </div>
             <div class="modal-footer">
                 <button
@@ -182,16 +147,10 @@
         
         // Whendelete course btn clicked 
         btnDeleteCourse.onclick = function () {
-            deleteForm.action = '/courses/' + courseId + '?_method=DELETE';
+            deleteForm.action = '/admin/' + courseId + '/delete?_method=DELETE';
             deleteForm.submit(); 
         } 
         
-        checkboxAll.change(function () {
-            var isCheckedAll = $(this).prop('checked');
-            courseItemCheckbox.prop('checked', isCheckedAll);
-            rederCheckAllSubmitBtn();
-        });
-
         //Course item checkbox change
         courseItemCheckbox.change(function() {
             var isCheckedAll = courseItemCheckbox.length ===  $('input[name="courseIds[]"]:checked').length;

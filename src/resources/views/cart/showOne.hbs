@@ -13,6 +13,7 @@
 </header>
 
 <div class="d-flex">
+
     <div class="slide-bar">
         <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
             <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
@@ -24,7 +25,7 @@
                 <a class="btn-hover btn text-white" href="/cart/transportCart">Xác nhận đơn hàng</a>
                 <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
                 <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
-                <a class="btn-hover btn text-white  current" href="/statistical">Thống kê</a>
+                <a class="btn-hover btn text-white" href="/statistical">Thống kê</a>
                 <div class="dropdown-divider"></div>
                 <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
                 <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
@@ -34,62 +35,17 @@
         </div>
     </div>
 
-    <div class="w-100 m-4">
-        <h3>Thống kê</h3>
+    <div class="w-100 form-item">
+        <h3 class="pb-4">Chi tiết đơn hàng</h3>
 
-        <div class="d-flex w-100 flex-wrap justify-content-around">
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Số đơn hàng đã đặt</div>
-                    <hr>
-                    <div class="">{{count}}</div>
-                </div>
-            </div> 
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Tổng số tiền đã nhận</div>
-                    <hr>
-                    <div class="">{{total}} VNĐ</div>
-                </div>
-            </div>
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Số sản phẩm đã hết</div>
-                    <hr>
-                    <div class="">{{amount}}</div>
-                </div>
-            </div>
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Số sản phẩm đã hết</div>
-                    <hr>
-                    <div class="">{{amount}}</div>
-                </div>
-            </div>
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Số đơn hàng đang vận chuyển</div>
-                    <hr>
-                    <div class="">{{shipping}}</div>
-                </div>
-            </div> 
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Tổng số người dùng</div>
-                    <hr>
-                    <div class="">{{countRole}}</div>
-                </div>
-            </div>
-
-
-        </div>      
+        <div class="mt-4">
+            <h5 style="height: 40px;">Người đặt: {{cart.nameuser}}</h5>
+            <h5 style="height: 40px;">Tên sản phẩm: {{cart.nameitem}}</h5>
+            <h5 style="height: 40px;">Khối lượng: {{cart.amount}} kg</h5>
+            <h5 style="height: 40px;">Tổng giá tiên: {{cart.cost}} VNĐ</h5>
+            <h5 style="height: 40px;">Số điện thoại liên lạc: 0{{cart.phoneNumber}}</h5>
+            <h5 style="height: 40px;">Địa chỉ: {{cart.address}}</h5>
+        </div>
+        
     </div>
 </div>
-
-
-

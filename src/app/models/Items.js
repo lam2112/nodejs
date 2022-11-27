@@ -13,7 +13,7 @@ const ItemSchema = new Schema(
         name: { type: String, maxLength: 255, require: true, unique: true },
         classify: { type: String, maxLength: 255 },
         amount: { type: Number, maxLenght: 20},
-        image: {type: String, maxLength: 255},
+        image: {type: String},
         description: { type: String, maxLength: 600 },
         from: {type: String, maxLengt: 255},
         cost: { type: Number },

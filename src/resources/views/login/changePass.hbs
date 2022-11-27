@@ -1,0 +1,107 @@
+<header id="nav-header" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Rau tươi</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <img class="mr-3" src="{{acc.avt}}" height="40px" width="40px" alt="">
+                <div class="d-flex align-items-center text-white">{{acc.username}}</div>
+            </ul>
+    </div>
+</header>
+
+<div class="d-flex">
+    <div class="slide-bar">
+        <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
+            <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
+                <a class="btn-hover btn text-white" href="/items/create">Thêm sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/show">Hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/showFE">Giao diện hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/admin/show/users">Hiển thị người dùng</a>
+                <a class="btn-hover btn text-white" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/transportCart">Xác nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/statistical">Thống kê</a>
+                <div class="dropdown-divider"></div>
+                <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
+                <a class="btn-hover btn text-white current" href="/login/changePass">Đổi mật khẩu</a>
+                <a class="btn-hover btn text-white" href="/login/editInfo">Sửa thông tin</a>
+                <a class="btn-hover btn text-white" href="/login/logout">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center w-100 h-50">
+        <div class="mt-4 card w-50 ">
+            <div class="card-body blob">
+                <form onsubmit="return myFunction()" method="POST" action="/login/{{acc._id}}/update?_method=PUT">
+                    <h3 class=" justify-content-center">Đổi mật khẩu</h3>
+
+                    <div class="form-group">
+                        <label for="name">Nhập tên đăng nhập: </label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{acc.username}}" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="oldPassword">Mật khẩu cũ: </label>
+                        <input type="password" data-old="{{acc.password}}" class="form-control" id="oldPassword" name="oldPassword" required/>
+                        <div id="err-old" class="err"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Mật khẩu mới:</label>
+                        <input type="password" class="form-control" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mật khẩu phải trên 8 ký tự, có ít nhất một số, một chữ cái viết hoa và viết thường" required>
+                        <div id="err-new" class="err"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Nhập lại mật khẩu mới:</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        <div id="err-new-confirm" class="err"></div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary d-flex justify-content-end">Đổi mật khẩu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function myFunction(){
+        const oldPassSubmit = $('#oldPassword').val();
+        const x = document.getElementById("oldPassword");
+        const olPass = x.getAttribute('data-old');
+        const newPass = $('#password').val();
+        const newPC = $('#confirmPassword').val();
+
+
+        const errOld = document.getElementById("err-old")
+        const errNew = document.getElementById("err-new")
+        const errNC = document.getElementById("err-new-confirm")
+
+        if(olPass != oldPassSubmit){
+            errOld.innerHTML = "* Nhập sai mật khẩu cũ"
+            errNew.innerHTML = ""
+            errNC.innerHTML = ""
+            return false;
+        }else if(oldPassSubmit === newPass){
+            errOld.innerHTML = ""
+            errNew.innerHTML = "* Mật khẩu mới giống mật khẩu cũ"
+            return false;
+        }else if(newPass !== newPC){
+            errOld.innerHTML = ""
+            errNew.innerHTML = ""
+            errNC.innerHTML = "* Nhập mật khẩu nhập lại 2 sai"
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
+    

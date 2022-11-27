@@ -1,101 +1,98 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Rau tươi</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<header id="nav-header" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Rau tươi</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                            <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/items/create">Thêm sản phẩm</a>
-                            <a class="dropdown-item" href="/items/show">Hiển thị sản phẩm</a>
-                            <a class="dropdown-item" href="/admin/show/users">Hiển thị người dùng</a>
-                            <a class="dropdown-item" href="/cart/showCart">Danh sách đơn đặt hàng</a>
-                            <a class="dropdown-item" href="/cart/transportCart">Xác nhận đơn hàng</a>
-                            <a class="dropdown-item" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
-                            <a class="dropdown-item" href="/cart/takeCart">Nhận đơn hàng</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/login/logout">Đăng xuất</a>
-
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <img class="mr-3" src="{{acc.avt}}" height="40px" width="40px" alt="">
+                <div class="d-flex align-items-center text-white">{{acc.username}}</div>
+            </ul>
+    </div>
 </header>
 
-<div class="container">
-    <form  class="mt-4" method="POST" name="container-form" action="/items/handle-form-actions">
-        <h3>Xác nhận đơn hàng</h3>
+<div class="d-flex">
+    <div class="slide-bar">
+        <div class="navbar navbar-dark bg-dark align-items-start" id="navbar-main">
+            <div class="nav flex-column nav-pills" id="v-pills-tab navbar-main" role="tablist" aria-orientation="vertical">
+                <a class="btn-hover btn text-white" href="/items/create">Thêm sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/show">Hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/items/showFE">Giao diện hiển thị sản phẩm</a>
+                <a class="btn-hover btn text-white" href="/admin/show/users">Hiển thị người dùng</a>
+                <a class="btn-hover btn text-white" href="/cart/showCart">Danh sách đơn đặt hàng</a>
+                <a class="btn-hover btn text-white current" href="/cart/transportCart">Xác nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
+                <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
+                <a class="btn-hover btn text-white" href="/statistical">Thống kê</a>
+                <div class="dropdown-divider"></div>
+                <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
+                <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
+                <a class="btn-hover btn text-white" href="/login/editInfo">Sửa thông tin</a>
+                <a class="btn-hover btn text-white" href="/login/logout">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
 
-        <table class="table mt-4">
-            <thead>
-                <tr>
-                    <th scope="col">
-                        Người đặt
-                    </th>
+    <div class="w-100 form-item">
 
-                    <th scope="col">
-                        Tên sản phẩm
-                        {{!-- https://handlebarsjs.com/guide/#html-escaping (raw) --}}
-                        {{{sortable 'name' _sort}}}
-                    </th>
-                    
-                    <th scope="col">
-                        Số lượng
-                    </th>
+        <form  class="mt-4" method="POST" name="container-form" action="/items/handle-form-actions">
+            <h3>Xác nhận đơn hàng</h3>
 
-                    <th scope="col">
-                        Tổng giá tiền
-                    </th>
-
-                    
-                </tr>
-            </thead>
-            <tbody>
-                {{#each carts}}
+            <table class="table mt-4">
+                <thead>
                     <tr>
-                        {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
-                        <td id="name-user"></td>
-                        <td>{{this.nameitem}}</td>
-                        <td>{{this.amount}} kg</td>
-                        <td>{{this.cost}}</td>
+                        <th scope="col">
+                            Người đặt
+                        </th>
 
-                        <td>
-                            <a href="" class="btn btn-outline-danger m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-item-modal">Hủy đơn hàng</a>
-                            <a href="" class="btn btn-outline-success m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#accept-item-modal">Chấp nhận</a>
-                        </td>
+                        <th scope="col">
+                            Tên sản phẩm
+                            {{!-- https://handlebarsjs.com/guide/#html-escaping (raw) --}}
+                        </th>
+                        
+                        <th scope="col">
+                            Số lượng
+                        </th>
+
+                        <th scope="col">
+                            Tổng giá tiền
+                        </th>
+
+                        <th scope="col">
+                            Chức năng
+                        </th>
+                        
                     </tr>
-                
-                {{else}}
-                    <tr>
-                        <td colspan="5" class="text-center">
-                            Hiện không có đơn hàng nào
-                        </td>
-                    </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    </form>
+                </thead>
+                <tbody>
+                    {{#each carts}}
+                        <tr>
+                            {{! https://handlebarsjs.com/guide/builtin-helpers.html#each }}
+                            <td>{{this.nameuser}}</td>
+                            <td>{{this.nameitem}}</td>
+                            <td>{{this.amount}} kg</td>
+                            <td>{{this.cost}}</td>
+
+                            <td>
+                                <a href="" class="btn btn-outline-danger m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-item-modal">Hủy đơn hàng</a>
+                                <a href="" class="btn btn-outline-success m-1" data-toggle="modal" data-id="{{this._id}}" data-target="#accept-item-modal">Chấp nhận</a>
+                            </td>
+                        </tr>
+                    
+                    {{else}}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                Hiện không có đơn hàng nào
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </form>
+    </div>
 </div>
+
 {{! Confirm delete items }}
 <div id="delete-item-modal" class="modal" tabindex="-1">
     <div class="modal-dialog">
@@ -171,9 +168,4 @@
     });
 
 
-</script>
-
-<script>
-    nameUser = window.localStorage.getItem("name")
-    document.getElementById("name-user").innerHTML = nameUser
 </script>

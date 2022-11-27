@@ -1,74 +1,63 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Rau tươi</a>
-        </div>
-    </nav>
+<header id="nav-header" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Rau tươi</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 </header>
 
-<div class="mt-4 container">
-    <h3>Đăng ký</h3>
-    <form method="POST" action="" name="regfr" onsubmit="return frmValidate()">
+<div class="d-flex justify-content-center w-100">
+    <div class="mt-4 card w-50 ">
+        <div class="card-body blob">
+            <h3 class="card-title d-flex justify-content-center">Đăng ký</h3>
+            <form method="POST" action="" name="regfr" onsubmit="return frmValidate()">
 
-        <div class="form-group">
-            <label for="name">Nhập tên người dùng</label>
-            <input type="username" class="form-control" id="username" name="username" required/>
+                <div class="form-group">
+                    <label for="name">Nhập tên đăng nhập:</label>
+                    <input type="text" class="form-control" id="username" name="username" oninvalid="this.setCustomValidity('Bạn chưa nhập tên đăng nhập')" oninput="setCustomValidity('')" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mật khẩu:</label>
+                    <input type="password" class="form-control" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" oninvalid="this.setCustomValidity('Mật khẩu phải trên 8 ký tự, có ít nhất một số, một chữ cái viết hoa và viết thường')" oninput="setCustomValidity('')" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Nhập lại mật khẩu:</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" oninvalid="this.setCustomValidity('Bạn chưa nhập lại mật khẩu')" oninput="setCustomValidity('')" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Họ và tên:</label>
+                    <input type="text" class="form-control" id="name" name="name" oninvalid="this.setCustomValidity('Bạn chưa nhập họ và tên')" oninput="setCustomValidity('')" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Tuổi:</label>
+                    <input type="number" class="form-control" id="age" name="age" oninvalid="this.setCustomValidity('Bạn chưa nhập tuổi')" oninput="setCustomValidity('')" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="avt">Link ảnh đại diện:</label>
+                    <input type="text" class="form-control" id="avt" name="avt" oninvalid="this.setCustomValidity('Bạn chưa nhập link ảnh đại diện')" oninput="setCustomValidity('')" required>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Địa chỉ:</label>
+                    <textarea class="form-control" aria-label="With textarea" name="address" id="address" cols="30" rows="4" oninvalid="this.setCustomValidity('Bạn chưa nhập địa chỉ')" oninput="setCustomValidity('')" required></textarea>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Số điện thoại liên hệ:</label>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" oninvalid="this.setCustomValidity('Bạn chưa nhập đủ 10 số hoăc không hợp lệ')" oninput="setCustomValidity('')" pattern="(\+84|0)\d{9,10}" required>
+                </div>
+                
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-info" href="/">Quay lại</a>
+                    <button type="submit" class="btn btn-primary">Đăng ký</button>
+                </div>
+            </form>
         </div>
-
-        <div class="form-group">
-            <label for="password">Mật khẩu:</label>
-            <input type="password" class="form-control" id="password" name="password " pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mật khẩu phải trên 8 ký tự, có ít nhất một số, một chữ cái viết hoa và viết thường" required>
-        </div>
-
-        <div class="form-group">
-            <label for="confirmPassword">Mật khẩu:</label>
-            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-        </div>
-
-        <div class="form-group">
-            <label for="name">Họ và tên:</label>
-            <input type="text" class="form-control" id="name" name="name" / required>
-        </div>
-
-        <div class="form-group">
-            <label for="age">Tuổi:</label>
-            <input type="number" class="form-control" id="age" name="age" / required>
-        </div>
-
-        <div class="form-group">
-            <label for="avt">Link ảnh đại diện:</label>
-            <input type="text" class="form-control" id="avt" name="avt" />
-
-        </div>
-
-        <div class="form-group">
-            <label for="address">Địa chỉ:</label>
-            <textarea class="form-control" aria-label="With textarea" name="address" id="address" cols="30" rows="4" required></textarea>
-
-        </div>
-
-        <div class="form-group">
-            <label for="phoneNumber">Số điện thoại liên hệ:</label>
-            <input type="number" class="form-control" id="phoneNumber" name="phoneNumber" required />
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Đăng ký</button>
-    </form>
+    </div>
 </div>
-
-<script>
-    function frmValidate(){
-        var frm = document.forms['regfr'];
-        var pass1 = frm.password;
-        var pass2 = frm.confirmPassword;
-
-        if(!(pass1.value === pass2.value)){
-            alter("Mật khẩu nhập lần 2 sai!");
-            pass2.focus();
-            return false;
-        }
-
-        alert("Đăng ký thành công!");
-        return true;
-    }
-</script>

@@ -24,7 +24,7 @@
                 <a class="btn-hover btn text-white" href="/cart/transportCart">Xác nhận đơn hàng</a>
                 <a class="btn-hover btn text-white" href="/cart/shippingCart">Đơn hàng đang vận chuyển</a>
                 <a class="btn-hover btn text-white" href="/cart/takeCart">Nhận đơn hàng</a>
-                <a class="btn-hover btn text-white  current" href="/statistical">Thống kê</a>
+                <a class="btn-hover btn text-white" href="/statistical">Thống kê</a>
                 <div class="dropdown-divider"></div>
                 <a class="btn-hover btn text-white" href="/login/checkInfor">Xem thông tin cá nhân</a>
                 <a class="btn-hover btn text-white" href="/login/changePass">Đổi mật khẩu</a>
@@ -34,62 +34,41 @@
         </div>
     </div>
 
-    <div class="w-100 m-4">
-        <h3>Thống kê</h3>
+    <div class="d-flex justify-content-center w-100 h-50">
+        <div class="mt-4 card w-50 ">
+            <div class="card-body blob">
+                <h3>Sửa quyền người dùng</h3>
 
-        <div class="d-flex w-100 flex-wrap justify-content-around">
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Số đơn hàng đã đặt</div>
-                    <hr>
-                    <div class="">{{count}}</div>
-                </div>
-            </div> 
+                <form class="mt-4" id="form-edit-user" method="POST" action="/admin/{{account._id}}/update?_method=PUT">
 
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Tổng số tiền đã nhận</div>
-                    <hr>
-                    <div class="">{{total}} VNĐ</div>
-                </div>
+                    <div class="form-group">
+                        <label for="name">Người dùng:</label>
+                        {{!-- <input type="text" class="form-control" value="{{account.name}}" id="name" name="name" /> --}}
+                        <p class="form-control">{{account.name}}</p>
+                    </div>
+
+                    <label for="role">Chọn Quyền:</label>
+                    <div class="input-group">
+                        <select class="custom-select" id="role" name="role" form="form-edit-user">
+                            <option id="value" data-value="{{account.role}}" selected></option>
+                            <option value=1>Admin</option>
+                            <option value=2>User</option>
+                        </select>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mt-3">Lưu lại</button>
+
+                    </div>
+                </form>
             </div>
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Số sản phẩm đã hết</div>
-                    <hr>
-                    <div class="">{{amount}}</div>
-                </div>
-            </div>
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Số sản phẩm đã hết</div>
-                    <hr>
-                    <div class="">{{amount}}</div>
-                </div>
-            </div>
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Số đơn hàng đang vận chuyển</div>
-                    <hr>
-                    <div class="">{{shipping}}</div>
-                </div>
-            </div> 
-
-            <div class="mt-4 card blod-statistical">
-                <div class="card-body  bolb-custom ">
-                    <div class="tille-statistical">Tổng số người dùng</div>
-                    <hr>
-                    <div class="">{{countRole}}</div>
-                </div>
-            </div>
-
-
-        </div>      
+        </div>
     </div>
 </div>
 
+<script>
+    const value = document.getElementById("value") 
+    const role = parseInt(value.getAttribute('data-value')) === 1 ? "Admin" : "User"
 
-
+    value.innerHTML = role
+</script>

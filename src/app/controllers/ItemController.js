@@ -10,61 +10,73 @@ const {
 class ItemController {
 
     show(req, res, next) {
-        const itemQuery = Item.find({});
-
-        if (req.query.hasOwnProperty('_sort')){
-            const isValidtype = ['asc', 'desc'].includes(req.query.type)
-            itemQuery = itemQuery.sort({
-                [req.query.column]: isValidtype ? req.query.type : 'default',
-            })
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
         }
-
+        const itemQuery = Item.find({});
         var token = req.cookies.token
         var iduser = jwt.verify(token, 'mk')
-        Account.findOne({
-            _id: iduser
-        }).then((account)=>{
-            res.locals.account = account
-        })
-        
-        itemQuery
-        .then((item) => {
-                var role = res.locals.account.role; 
-                if(role === 1){
-                    res.render("items/show", {
-                        item: mutipleMogooseObject(item)
-                    });
-                }
-                else{
-                    res.render("items/show", {
-                        item: mutipleMogooseObject(item)
-                    });
-                } 
-                
-            })
-            .catch((err) => {
-                next = next(err);
+
+        Promise.all([
+            Account.findOne({_id: iduser}),
+            itemQuery
+        ])
+        .then(([acc, item]) => { 
+
+            res.render("items/show", {
+                item: mutipleMogooseObject(item),
+                acc: mogooseToObject(acc)
             });
+               
+        })
+        .catch((err) => {
+            next = next(err);
+        });
     }
 
+
     showFE(req, res, next) {
-        let itemQuery = Item.find({});
-        itemQuery
-            .then((items) => {
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+        var token = req.cookies.token
+        var iduser = jwt.verify(token, 'mk')
+        Promise.all([
+            Item.find({}),
+            Account.findOne({_id: iduser})
+        ])
+        .then(([items, acc]) => {
+            if(acc.role ===1){
                 res.render("items/showFE", {
-                    items: mutipleMogooseObject(items)
+                    items: mutipleMogooseObject(items),
+                    acc: mogooseToObject(acc)
                 });
-            })
-            .catch((err) => {
-                next = next(err);
-            });
+            }else{
+                res.render("user/showFE", {
+                    items: mutipleMogooseObject(items),
+                    acc: mogooseToObject(acc)
+                });
+            }
+        })
+        .catch((err) => {
+            next = next(err);
+        });
     }
 
     showOne(req, res, next) {
-        Item.findOne({ slug: req.params.slug })
-            .then((item) => {
-                res.render("items/show-one", {
-                    item: mogooseToObject(item),
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+        var token = req.cookies.token
+        var iduser = jwt.verify(token, 'mk')
+        Promise.all([
+            Item.findOne({ slug: req.params.slug }),
+            Account.findOne({_id: iduser})
+        ])
+        .then(([item, acc]) => {
+            res.render("items/show-one", {
+                item: mogooseToObject(item),
+                acc: mogooseToObject(acc)
                 });
             })
             .catch((err) => {
@@ -73,7 +85,22 @@ class ItemController {
     }
 
     create(req, res, next) {
-        res.render("items/create");
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+        var token = req.cookies.token
+        var iduser = jwt.verify(token, 'mk')
+
+        Account.findOne({_id: iduser})
+
+        .then(( acc) => {
+            res.render("items/create",{
+                acc: mogooseToObject(acc)
+            })
+        })
+        .catch((err) => {
+            next = next(err);
+        });
     }
 
     store(req, res, next) {
@@ -84,6 +111,9 @@ class ItemController {
     }
 
     edit(req, res, next) {
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
         Item.findById(req.params.id)
             .then((item) =>
                 res.render("items/edit", {
@@ -108,6 +138,9 @@ class ItemController {
     }
 
     trash(req, res, next) {
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
         Item.findDeleted({})
             .then((items) =>
                 res.render("items/trashs", {
@@ -125,16 +158,18 @@ class ItemController {
             .catch(next);
     }
 
-    // PATCH /course/:id/restore
-    restore(req, res, next) {
+    restore(req, res, next) {  
         Item.restore({ _id: req.params.id })
-            .then(() => 
-                res.redirect("back"))
+            .then(() => {
+                res.redirect("back") }
+            )
             .catch(next);
         }
         
     addCart(req, res, next) {
-
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
         const cart = new Cart();
         const token = req.cookies.token
         const iduser = jwt.verify(token, 'mk');
@@ -150,7 +185,7 @@ class ItemController {
         ])
         .then(([acc, item]) => {
             cart.iduser = iduser; 
-            cart.nameuser =  acc.name
+            cart.nameuser =  acc.name;
             cart.iditem = iditem;
             cart.nameitem = nameitem;
             cart.amount = amount;
