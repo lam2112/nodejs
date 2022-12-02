@@ -36,7 +36,7 @@ class ItemController {
 
 
     showFE(req, res, next) {
-        if(req.cookies.token === undefined){
+        if(typeof req.cookies.token === undefined){
             res.redirect("/login")
         }
         var token = req.cookies.token
@@ -46,7 +46,7 @@ class ItemController {
             Account.findOne({_id: iduser})
         ])
         .then(([items, acc]) => {
-            if(acc.role ===1){
+            if(acc.role === 1){
                 res.render("items/showFE", {
                     items: mutipleMogooseObject(items),
                     acc: mogooseToObject(acc)
@@ -74,14 +74,23 @@ class ItemController {
             Account.findOne({_id: iduser})
         ])
         .then(([item, acc]) => {
-            res.render("items/show-one", {
-                item: mogooseToObject(item),
-                acc: mogooseToObject(acc)
-                });
-            })
-            .catch((err) => {
-                next = next(err);
-            });
+            if(acc.role === 1){
+                res.render("items/show-one", {
+                    item: mogooseToObject(item),
+                    acc: mogooseToObject(acc)
+                    });
+                
+            }else{
+                res.render("user/show-one", {
+                    item: mogooseToObject(item),
+                    acc: mogooseToObject(acc)
+                    });
+            }
+        })
+        
+        .catch((err) => {
+            next = next(err);
+        });
     }
 
     create(req, res, next) {
@@ -114,13 +123,21 @@ class ItemController {
         if(req.cookies.token === undefined){
             res.redirect("/login")
         }
-        Item.findById(req.params.id)
-            .then((item) =>
-                res.render("items/edit", {
-                    item: mogooseToObject(item)
-                })
-            )
-            .catch(next);
+        var token = req.cookies.token
+        var iduser = jwt.verify(token, 'mk')
+
+        Promise.all([
+      
+            Item.findById(req.params.id),
+            Account.findOne({_id: iduser})
+        ])
+        .then(([item, acc]) => {
+            res.render("items/edit", {
+                item: mogooseToObject(item),
+                acc: mogooseToObject(acc)
+            })
+        })
+         .catch(next);
     }
 
     update(req, res, next) {
@@ -141,10 +158,16 @@ class ItemController {
         if(req.cookies.token === undefined){
             res.redirect("/login")
         }
-        Item.findDeleted({})
-            .then((items) =>
+        var token = req.cookies.token
+        var iduser = jwt.verify(token, 'mk')
+        Promise.all([
+            Item.findDeleted({}),
+            Account.findOne({_id: iduser})
+        ])
+            .then(([items, acc]) =>
                 res.render("items/trashs", {
                     items: mutipleMogooseObject(items),
+                    acc: mogooseToObject(acc)
                 })
             )
             .catch(next);

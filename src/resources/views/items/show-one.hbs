@@ -1,5 +1,5 @@
 <header id="nav-header" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Rau tươi</a>
+    <a class="navbar-brand font-weight-bold" href="/admin">Rau tươi</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -58,7 +58,7 @@
                         <p>{{item.from}}</p>
                     </div>
 
-                    <div class="mt-4 ml-4">
+                    {{!-- <div class="mt-4 ml-4">
                         <form action="/items/addCart/{{item._id}}" method="POST" onsubmit="return myFunction()">
                             <div class="row justify-content-start input-group">
                                 <input type="text" name="name" id="name" value="" hidden>
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div> --}}
                     <p id="err"></p>
                         
                     </div>

@@ -20,18 +20,24 @@ class LoginController {
             password: password
         })
         .then(data => {
-    
+            
             if(data){
-                var token = jwt.sign({
-                    _id: data.id,
+                if(data.role == 2) {
+                    var token = jwt.sign({
+                        _id: data.id,
+        
+                    }, 'mk')
     
-                }, 'mk')
+                    var name = data.name;
+                    return res.json({
+                        token: token,
+                        name: name,
+                    })
+                }
+                else{
+                    alert("Bạn không đủ quyền")
+                }
 
-                var name = data.name;
-                return res.json({
-                    token: token,
-                    name: name,
-                })
             }
             else{
                 return res.json("Dang nhap that bai")
@@ -43,7 +49,22 @@ class LoginController {
     }
 
     logout(req, res, next) {
-        res.render("login/logout")
+        if(req.cookies.token === undefined){
+            res.redirect("/login")
+        }
+
+        var token = req.cookies.token;
+        var iduser = jwt.verify(token, 'mk');
+        Account.findOne({_id: iduser})
+        .then((acc) => {
+            if(acc.role === 1)
+                res.render("login/logout")
+            else
+                res.render("user/logout")
+
+        }).catch((err) => {
+            console.log(err)
+        });
     }
 
     changePass(req, res, next){
@@ -91,8 +112,8 @@ class LoginController {
                     acc: mogooseToObject(acc)
                 })
             else
-            res.render("user/editInfor",{
-                acc: mogooseToObject(acc)
+                res.render("user/editInfor",{
+                    acc: mogooseToObject(acc)
             })
 
         }).catch((err) => {

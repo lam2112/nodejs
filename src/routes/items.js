@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
 const itemController = require("../app/controllers/itemController");
-const checkLogin = require('../app/middleware/checkLoginMiddleware')
-const checkAdmin = require('../app/middleware/checkAdminMiddleware')
-
-// itemController.index
 
 router.post("/addCart/:id", itemController.addCart)
 router.post("/:id/restore", itemController.restore);

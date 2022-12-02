@@ -5,14 +5,28 @@ const {
     mutipleMogooseObject,
 } = require("../../util/mongoose");
 const { NULL, render } = require("node-sass");
+const { ExpressHandlebars } = require("express-handlebars");
 
 class AdminController {   
-    adminIndex(req, res, next) {
+
+    home(req, res, next) {
         if(req.cookies.token === undefined){
             res.redirect("/login")
         }
         try {
-            res.render("admin/adminIndex")
+            var token = req.cookies.token
+            var iduser = jwt.verify(token, 'mk')
+            Promise.all([
+                Account.findOne({_id: iduser}),
+            ])
+                .then(([acc, users]) =>
+                    res.render("admin/home", {
+                        acc: mogooseToObject(acc),
+                    
+                    })
+                )
+    
+                .catch(next);
             
         } catch (error) {
             console.log(error)
@@ -72,6 +86,47 @@ class AdminController {
         Account.updateOne({ _id: req.params.id }, req.body)
             .then(() => res.redirect("/admin/show/users"))
             .catch(next); 
+    }
+
+    login(req, res, next){
+        res.render("admin/login")
+    }
+
+    sendLogin(req, res, next){
+        var username = req.body.username
+        var password = req.body.password
+    
+        Account.findOne({
+            username: username,
+            password: password
+        })
+        .then(data => {
+            
+            if(data){
+                if(data.role == 1) {
+                    var token = jwt.sign({
+                        _id: data.id,
+        
+                    }, 'mk')
+    
+                    var name = data.name;
+                    return res.json({
+                        token: token,
+                        name: name,
+                    })
+                }
+                else{
+                    alert("Bạn không đủ quyền")
+                }
+
+            }
+            else{
+                return res.json("Dang nhap that bai")
+            }
+        })
+        .catch(err => {
+            res.status(500).json("Loi server")
+        })
     }
 }
 
